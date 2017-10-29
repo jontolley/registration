@@ -1,0 +1,53 @@
+
+.app-navbar-dark {
+    background-color: #333;
+}
+
+nav.navbar{
+    min-height: 100px;
+    // Animation
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+    .nav-link {
+        position: relative;
+    }
+
+    &.shrink {
+        min-height: 56px;
+        opacity: 0.85;
+    }
+}
+
+.nav-logo {
+    width: 40px;
+    height: 47px;
+    margin: -10px 10px 0 0;
+}
+
+.title {
+    display: inline;
+}
+
+@media (min-width: 1000px) {
+
+    .navbar-nav .nav-item a:hover:after, .navbar-nav .nav-item a.active:after {
+        opacity: 1;
+        -webkit-transform: translateY(0px);
+        -moz-transform: translateY(0px);
+        transform: translateY(0px);
+    }
+
+    .navbar-nav .nav-item a:after {
+        position: absolute;
+        top: 86%;
+        right: 8px;
+        left: 8px;
+        height: 2px;
+        background: #1f6dce;
+        content: '';
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        transform: translateY(10px);
+    }
+}
