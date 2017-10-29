@@ -8,7 +8,12 @@ import reframe from 'reframe.js';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  startDate:Date;
+
+  constructor() {
+    this.startDate = new Date(2018, 7, 6, 5, 0, 0);
+    console.log('Encampment Start Date:', this.startDate);
+  }
 
   ngOnInit() {
     reframe('.reframe');
