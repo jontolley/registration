@@ -1,0 +1,14 @@
+.faq-list {
+    .faq-question {
+        cursor: pointer;
+    }
+
+    .faq-answer {
+        display: none;
+        transition: all 0.4 ease;
+
+        &.faq-display {
+            display: block;
+        }
+    }
+}
