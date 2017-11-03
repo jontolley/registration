@@ -23,6 +23,18 @@ export class FaqComponent implements OnInit {
   faq_Outreach = false;
   faq_Gateways = false;
   faq_TShirts = false;
+  faq_TransportationParking = false;
+  faq_Security = false;
+  faq_Trailers = false;
+  faq_PowerWaterPortaPottiesShowers = false;
+  faq_Communication = false;
+  faq_Training = false;
+  faq_YouthProtectionTraining = false;
+  faq_Food = false;
+  faq_Budget = false;
+  faq_Uniforms = false;
+  faq_CurrentNeeds = false;
+  faq_Responsibilities = false;
 
   constructor() { }
 

@@ -1,14 +1,42 @@
 .faq-list {
-    .faq-question {
-        cursor: pointer;
-    }
+    .faq-group {
+        border-bottom: 1px solid #666666;
 
-    .faq-answer {
-        display: none;
-        transition: all 0.4 ease;
+        .faq-question {
+            margin-bottom: 0;
+
+            cursor: pointer;
+            padding: 8px;
+
+            .fa-minus-circle {
+                display: none;
+            }
+    
+            &:hover {
+                background-color: #cccccc;
+                color: #ffffff;
+            }
+        }
+    
+        .faq-answer {
+            display: none;
+            padding-left: 35px;
+            transition: all 0.4 ease;
+        }
 
         &.faq-display {
-            display: block;
+            .faq-question {
+                .fa-plus-circle {
+                    display: none;
+                }
+                .fa-minus-circle {
+                    display: inline;
+                }
+            }
+
+            .faq-answer {
+                display: block;
+            }
         }
     }
 }
