@@ -6,12 +6,19 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 mt-3">
-      <h1>Campsite Map</h1>
-      <img src="assets/campsites.png" alt="Campsites">
+      <h1>Google Map</h1>
+      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" mapTypeId="hybrid">
+        <agm-marker *ngFor="let marker of markers" [latitude]="marker.lat" [longitude]="marker.lng" [label]="marker.label">
+          <agm-info-window>
+            <div>{{marker.description}}</div>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
     </div>
+
     <div class="col-md-12 mt-3">
-        <h1>Google Map</h1>
-        <div id="direction-map"></div>
-      </div>
+      <h1>Campsite Map</h1>
+      <img id="campsite-image" src="assets/campsites.png" alt="Campsites">
+    </div>
   </div>
 </div>

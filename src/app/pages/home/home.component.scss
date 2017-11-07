@@ -17,25 +17,38 @@ img.post-thumb {
     
     // background-size:contain;
     // background-position:center;
-    // background: linear-gradient(
-    //     rgba(255, 72, 0, 0.45),
-    //     rgba(238, 255, 0, 0.45)
-    // ), url("/assets/banner.jpg");
+    background: linear-gradient(
+        rgba(255, 72, 0, 0.45),
+        rgba(238, 255, 0, 0.45)
+    ), url("/assets/banner.jpg");
 
-    background-image:url("/assets/banner.jpg");    
+    // background-image:url("/assets/banner.jpg");    
     background-repeat:no-repeat;
     background-size: cover;
     background-position:center;
 }
 
-.logo {
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    height: 70%;
-    // width:70%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+.banner {
+
+    .banner-info {        
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+
+        .banner-logo {
+            width: 90%;
+        }
+
+        .banner-title {
+            display: none;
+        }
+
+        .banner-sub-title {
+            display: none;
+        }
+    }
 }
 
 .countdown-timer {
@@ -63,5 +76,30 @@ img.post-thumb {
     .arch-background {
         height: 420px;
         // padding-top: 28%;
+    }
+
+    .banner {
+        
+        .banner-info {
+            top: 20%;
+    
+            .banner-logo {
+                width: 45%;
+            }
+    
+            .banner-title {
+                font-family: 'Oswald', sans-serif;
+                text-transform: uppercase;
+                line-height: 1.2;
+                font-size: 2em;
+                font-weight: 500;
+                display: block;
+            }
+            
+            .banner-sub-title {
+                font-size: 1.5em;
+                display: block;
+            }
+        }
     }
 }

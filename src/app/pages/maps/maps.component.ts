@@ -7,6 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapsComponent implements OnInit {
 
+  lat: number = 48.122339;
+  lng: number = -117.227347;
+  zoom: number = 15;
+
+  markers = [
+    {
+      lat: 48.119742,
+      lng: -117.234771,
+      label: 'A',
+      description: 'Parking'
+    },
+    {
+      lat: 48.123929,
+      lng: -117.237454,
+      label: 'B',
+      description: 'Camp Sunrise'
+    }
+  ];
+
   constructor() { }
 
   ngOnInit() {

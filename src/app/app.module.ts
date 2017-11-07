@@ -14,6 +14,9 @@ import { FaqComponent } from './pages/faq/faq.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
 
+import { AgmCoreModule } from '@agm/core';
+import config from '../config';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +33,10 @@ import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: config.GOOGLE_MAPS_API_KEY
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
