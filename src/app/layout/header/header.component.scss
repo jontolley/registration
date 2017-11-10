@@ -5,17 +5,9 @@
 
 nav.navbar{
     min-height: 56px;
-    // Animation
-    -webkit-transition: all 0.5s ease;
-    transition: all 0.5s ease;
 
     .nav-link {
         position: relative;
-    }
-
-    &.smallNav {
-        // min-height: 56px;
-        opacity: 0.85;
     }
 }
 
