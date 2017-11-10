@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import reframe from 'reframe.js';
 
 @Component({
   selector: 'camp-home',
@@ -15,8 +14,6 @@ export class HomeComponent implements OnInit {
     console.log('Encampment Start Date:', this.startDate);
   }
 
-  ngOnInit() {
-    reframe('.reframe');
-  }
+  ngOnInit() { }
 
 }
