@@ -1,3 +1,4 @@
+
 .faq-list {
     .faq-group {
         border-bottom: 1px solid #666666;
@@ -8,7 +9,7 @@
             cursor: pointer;
             padding: 8px;
 
-            .fa-minus-circle {
+            .fa-plus-circle {
                 display: none;
             }
     
@@ -16,27 +17,19 @@
                 background-color: #cccccc;
                 color: #0078d7;
             }
-        }
-    
-        .faq-answer {
-            display: none;
-            padding-left: 35px;
-            transition: all 0.4 ease;
-        }
 
-        &.faq-display {
-            .faq-question {
-                .fa-plus-circle {
+            &.collapsed {
+                .fa-minus-circle {
                     display: none;
                 }
-                .fa-minus-circle {
+                .fa-plus-circle {
                     display: inline;
                 }
             }
-
-            .faq-answer {
-                display: block;
-            }
+        }
+    
+        .faq-answer {
+            padding-left: 35px;
         }
     }
 }
