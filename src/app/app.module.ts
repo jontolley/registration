@@ -12,7 +12,7 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 import { AgmCoreModule } from '@agm/core';
 import config from '../config';
@@ -29,7 +29,7 @@ import config from '../config';
     MapsComponent,
     FaqComponent,
     ContactComponent,
-    ShrinkOnScrollDirective
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
