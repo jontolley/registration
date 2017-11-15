@@ -1,0 +1,26 @@
+@import '~styles/variables';
+
+.schedule {
+    .header {
+        text-transform: uppercase;
+    }
+}
+.nav-item {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    a {
+        color:$gray-400;
+    }    
+
+    .active {
+        background-color:$gray-400;
+        color:$gray-700;
+    }
+
+    &:hover {
+        background-color:$gray-100;
+    }
+}

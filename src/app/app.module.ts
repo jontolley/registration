@@ -16,6 +16,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 
 import { AgmCoreModule } from '@agm/core';
 import config from '../config';
+import { ScheduleDayComponent } from './components/schedule-day/schedule-day.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import config from '../config';
     MapsComponent,
     FaqComponent,
     ContactComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    ScheduleDayComponent
   ],
   imports: [
     BrowserModule,
