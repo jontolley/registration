@@ -15,8 +15,9 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 
 import { AgmCoreModule } from '@agm/core';
-import config from '../config';
+import { APP_CONFIG } from './app.config';
 import { ScheduleDayComponent } from './components/schedule-day/schedule-day.component';
+import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
 
 @NgModule({
   declarations: [
@@ -31,13 +32,14 @@ import { ScheduleDayComponent } from './components/schedule-day/schedule-day.com
     FaqComponent,
     ContactComponent,
     PageHeaderComponent,
-    ScheduleDayComponent
+    ScheduleDayComponent,
+    ShrinkOnScrollDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
-      apiKey: config.GOOGLE_MAPS_API_KEY
+      apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
     })
   ],
   providers: [],
