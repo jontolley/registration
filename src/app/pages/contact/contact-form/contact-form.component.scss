@@ -1,0 +1,26 @@
+@import '~styles/variables';
+
+.contact {
+    .header {
+        text-transform: uppercase;
+    }
+}
+
+.form-error {
+  color: #a94442;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(.ng-untouched):not(form)  {
+  border: 1px solid #a94442; /* red */
+}
+
+.form-submitted {
+  .ng-invalid:not(form)  {
+    border: 1px solid #a94442; /* red */
+  }
+}
+

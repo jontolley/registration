@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="mt-3 contact col-lg-10 mx-auto">
+    <div class="my-4 header">Complete this form to contact the Encampment Committee</div>
+    <form (ngSubmit)="onSubmit()" #contactForm="ngForm" [class.form-submitted]='submitted'>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputFirstName">First Name</label>
+          <input type="text" class="form-control" id="inputFirstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
+            required>
+          <div *ngIf="firstName.invalid && (firstName.dirty || submitted)" class="form-error">
+            <div *ngIf="firstName.errors.required"><small>First Name is required</small></div>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputLastName">Last Name</label>
+          <input type="text" class="form-control" id="inputLastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
+            required>
+            <div *ngIf="lastName.invalid && (lastName.dirty || submitted)" class="form-error">
+              <div *ngIf="lastName.errors.required"><small>Last Name is required</small></div>
+            </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail">Email</label>
+          <input type="text" class="form-control" id="inputEmail" [(ngModel)]="model.email" name="email" #email="ngModel" required>
+          <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+            Email is required
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPhoneNumber">Phone Number</label>
+          <input type="text" class="form-control" id="inputPhoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputStake">Stake</label>
+          <input type="text" class="form-control" id="inputStake" [(ngModel)]="model.stake" name="stake" #stake="ngModel">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputWard">Ward</label>
+          <input type="text" class="form-control" id="inputWard" [(ngModel)]="model.ward" name="ward" #ward="ngModel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <label for="inputMessage">Message</label>
+          <textarea type="text" class="form-control" id="inputMessage" required [(ngModel)]="model.message" name="message" #message="ngModel"
+            rows="3" required></textarea>
+          <div [hidden]="message.valid || message.pristine" class="alert alert-danger">
+            Message is required
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="submitted">Send Message</button>
+      <button type="reset" class="btn btn-primary" (click)="reset()">Reset</button>
+    </form>
+  </div>
+</div>

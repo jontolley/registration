@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule }   from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +19,7 @@ import { AgmCoreModule } from '@agm/core';
 import { APP_CONFIG } from './app.config';
 import { ScheduleDayComponent } from './components/schedule-day/schedule-day.component';
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
+import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -33,10 +35,12 @@ import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive
     ContactComponent,
     PageHeaderComponent,
     ScheduleDayComponent,
-    ShrinkOnScrollDirective
+    ShrinkOnScrollDirective,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
