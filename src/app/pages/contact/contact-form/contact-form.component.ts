@@ -21,8 +21,6 @@ export class ContactFormComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log("firstName", firstName);
-
     this.submitted = true;
     console.log(this.model);
   }
