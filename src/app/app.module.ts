@@ -20,6 +20,7 @@ import { APP_CONFIG } from './app.config';
 import { ScheduleDayComponent } from './components/schedule-day/schedule-day.component';
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
 import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
+import { JtPhonePipe } from './pipes/jt-phone.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ContactFormComponent } from './pages/contact/contact-form/contact-form.
     PageHeaderComponent,
     ScheduleDayComponent,
     ShrinkOnScrollDirective,
-    ContactFormComponent
+    ContactFormComponent,
+    JtPhonePipe
   ],
   imports: [
     BrowserModule,
