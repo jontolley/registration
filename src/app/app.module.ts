@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { ScheduleDayComponent } from './components/schedule-day/schedule-day.com
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
 import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
 import { JtPhonePipe } from './pipes/jt-phone.pipe';
+import { DataService } from './services/data.service';
 
 @NgModule({
   declarations: [
@@ -43,12 +45,15 @@ import { JtPhonePipe } from './pipes/jt-phone.pipe';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     AppRoutingModule,
     AgmCoreModule.forRoot({
       apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
     })
   ],
-  providers: [],
+  providers: [
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

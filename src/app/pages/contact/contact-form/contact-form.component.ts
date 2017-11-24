@@ -2,6 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm }   from '@angular/forms';
 
 import { Contact } from '../contact';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'camp-contact-form',
@@ -17,7 +18,9 @@ export class ContactFormComponent implements OnInit {
   submiting:boolean;
   model:Contact;
 
-  constructor() { }
+  errorMessage:string;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.initializeVariables();
@@ -31,9 +34,21 @@ export class ContactFormComponent implements OnInit {
     }
 
     this.submiting = true;
-    // TODO: submit message to api
 
-    this.submitted = true;
+    this.dataService.sendContactMessage(this.model)
+    .subscribe(
+      data => { },
+      error => {
+        this.submiting = false;
+        this.errorMessage = error;
+        console.log(error);
+      },
+      () => {
+        console.log('Contact Message Sent');
+        this.submitted = true;
+        this.submiting = false;
+      }
+    );
   }
 
   initializeVariables() {
