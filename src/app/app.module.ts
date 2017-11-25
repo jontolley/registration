@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -15,6 +16,8 @@ import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { ErrorHeaderComponent } from './components/error-header/error-header.component';
+import { Error404Component } from './errors/error-404/error-404.component';
 
 import { AgmCoreModule } from '@agm/core';
 import { APP_CONFIG } from './app.config';
@@ -40,7 +43,9 @@ import { DataService } from './services/data.service';
     ScheduleDayComponent,
     ShrinkOnScrollDirective,
     ContactFormComponent,
-    JtPhonePipe
+    JtPhonePipe,
+    ErrorHeaderComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,

@@ -6,37 +6,40 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { Error404Component } from './errors/error-404/error-404.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    children: []
+    component: HomeComponent
   },
   {
     path: 'activities',
-    component: ActivitiesComponent,
-    children: []
+    component: ActivitiesComponent
   },
   {
     path: 'schedule',
-    component: ScheduleComponent,
-    children: []
+    component: ScheduleComponent
   },
   {
     path: 'maps',
-    component: MapsComponent,
-    children: []
+    component: MapsComponent
   },
   {
     path: 'faq',
-    component: FaqComponent,
-    children: []
+    component: FaqComponent
   },
   {
     path: 'contact',
-    component: ContactComponent,
-    children: []
+    component: ContactComponent
+  },
+  {
+    path: '404',
+    component: Error404Component
+  },
+  {
+    path: '**',
+    component: Error404Component
   }
 ];
 

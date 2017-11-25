@@ -1,8 +1,8 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { NgForm }   from '@angular/forms';
 
-import { Contact } from '../contact';
 import { DataService } from '../../../services/data.service';
+import { Contact } from '../../../models/contact';
 
 @Component({
   selector: 'camp-contact-form',
