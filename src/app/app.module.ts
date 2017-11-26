@@ -14,6 +14,7 @@ import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { ErrorHeaderComponent } from './components/error-header/error-header.component';
@@ -45,7 +46,8 @@ import { DataService } from './services/data.service';
     ContactFormComponent,
     JtPhonePipe,
     ErrorHeaderComponent,
-    Error404Component
+    Error404Component,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

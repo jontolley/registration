@@ -6,6 +6,7 @@ import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { ContactComponent } from './pages/contact/contact.component';
+import { RegistrationComponent } from './pages/registration/registration.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'faq',
     component: FaqComponent
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent
   },
   {
     path: 'contact',

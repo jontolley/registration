@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { NgForm }   from '@angular/forms';
 
 import { DataService } from '../../../services/data.service';
@@ -13,12 +13,12 @@ export class ContactFormComponent implements OnInit {
 
   @ViewChild('contactForm') public contactForm: NgForm;
 
+  errorMessage:string;
+
   submitted:boolean;
   submitFailed:boolean;
   submiting:boolean;
   model:Contact;
-
-  errorMessage:string;
 
   constructor(private dataService: DataService) { }
 
@@ -59,6 +59,7 @@ export class ContactFormComponent implements OnInit {
   }
 
   reset() {
+    this.errorMessage = undefined;
     this.contactForm.reset();
     this.initializeVariables();
   }
