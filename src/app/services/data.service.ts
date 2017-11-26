@@ -8,8 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DataService {
 
-  //API_URL = 'http://encampment-api.azurewebsites.net/api';
-  API_URL = 'http://localhost:19671/api';
+  API_URL = 'http://encampment-api.azurewebsites.net/api';
   
   constructor(private http: Http) { }
 
