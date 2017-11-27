@@ -28,6 +28,7 @@ import { ContactFormComponent } from './pages/contact/contact-form/contact-form.
 import { JtPhonePipe } from './pipes/jt-phone.pipe';
 import { DataService } from './services/data.service';
 import { CloseMenuDirective } from './directives/close-menu.directive';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { CloseMenuDirective } from './directives/close-menu.directive';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    TextMaskModule,
     AgmCoreModule.forRoot({
       apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
     })

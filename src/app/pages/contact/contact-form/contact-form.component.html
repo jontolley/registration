@@ -6,21 +6,26 @@
     <form (ngSubmit)="onSubmit()" #contactForm="ngForm">
       <div class="form-row">
         <div class="form-group col-md-6" [class.form-error]="name.invalid && (name.dirty || submitFailed)">
-          <label for="inputName">Name</label><label class="required">required</label>
+          <label for="inputName">Name</label>
+          <label [class.error-message]="name.hasError('required')" class="required">required</label>
           <input type="text" class="form-control" id="inputName" [(ngModel)]="model.name" name="name" #name="ngModel"
             required>
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-6" [class.form-error]="email.invalid && (email.dirty || submitFailed)">
-          <label for="inputEmail">Email</label><label class="required">required</label>
-          <input type="text" class="form-control" id="inputEmail" [(ngModel)]="model.email" name="email" #email="ngModel" required>
+        <div class="form-group col-md-6"
+          [class.form-error]="(email.hasError('required') && (email.dirty || submitFailed)) || (email.hasError('email') && submitFailed)">
+          <label for="inputEmail">Email</label>
+          <label [class.error-message]="email.hasError('required')" class="required">required</label>
+          <input type="email" class="form-control" id="inputEmail" [(ngModel)]="model.email" name="email" #email="ngModel" required email>
+          <div *ngIf="(email.hasError('email') && !email.hasError('required')) && submitFailed" [class.error-message]="email.hasError('email')">
+            <small class="text-uppercase">Please enter a valid email address</small></div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6" [class.form-error]="phoneNumber.invalid && (phoneNumber.dirty || submitFailed)">
           <label for="inputPhoneNumber">Phone Number</label>
-          <input type="text" class="form-control" id="inputPhoneNumber" [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+          <input type="text" class="form-control" id="inputPhoneNumber" [textMask]="{mask: phoneMask}" [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
         </div>
       </div>
       <div class="form-row">
@@ -35,7 +40,8 @@
       </div>
       <div class="form-row">
         <div class="form-group col-md-12" [class.form-error]="message.invalid && (message.dirty || submitFailed)">
-          <label for="inputMessage">Message</label><label class="required">required</label>
+          <label for="inputMessage">Message</label>
+          <label [class.error-message]="message.hasError('required')" class="required">required</label>
           <textarea type="text" class="form-control" id="inputMessage" required [(ngModel)]="model.message" name="message" #message="ngModel"
             rows="3" required></textarea>
         </div>

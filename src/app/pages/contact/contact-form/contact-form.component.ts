@@ -15,6 +15,8 @@ export class ContactFormComponent implements OnInit {
 
   errorMessage:string;
 
+  phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
   submitted:boolean;
   submitFailed:boolean;
   submiting:boolean;
@@ -32,6 +34,8 @@ export class ContactFormComponent implements OnInit {
       this.submitFailed = true;
       return;
     }
+
+    this.model.phoneNumber = this.model.phoneNumber ? this.model.phoneNumber.replace(/\D/g,'') : undefined;
 
     this.submiting = true;
 
