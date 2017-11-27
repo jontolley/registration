@@ -7,28 +7,28 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarMenuToggler">
+      <div class="collapse navbar-collapse" id="navbarMenuToggler" #menu>
         <ul class="navbar-nav mt-2 mt-lg-0">
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['/']">Home</a>
+            <a class="nav-link" [routerLink]="['/']" campCloseMenu [menu]="menu">Home</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['activities']">Activities</a>
+            <a class="nav-link" [routerLink]="['activities']" campCloseMenu [menu]="menu">Activities</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['schedule']">Schedule</a>
+            <a class="nav-link" [routerLink]="['schedule']" campCloseMenu [menu]="menu">Schedule</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['maps']">Maps</a>
+            <a class="nav-link" [routerLink]="['maps']" campCloseMenu [menu]="menu">Maps</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['faq']">FAQ</a>
+            <a class="nav-link" [routerLink]="['faq']" campCloseMenu [menu]="menu">FAQ</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['registration']">Registration</a>
+            <a class="nav-link" [routerLink]="['registration']" campCloseMenu [menu]="menu">Registration</a>
           </li>
           <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-            <a class="nav-link" [routerLink]="['contact']">Contact</a>
+            <a class="nav-link" [routerLink]="['contact']" campCloseMenu [menu]="menu">Contact</a>
           </li>
         </ul>
       </div>

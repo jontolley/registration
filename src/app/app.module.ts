@@ -27,6 +27,7 @@ import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive
 import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
 import { JtPhonePipe } from './pipes/jt-phone.pipe';
 import { DataService } from './services/data.service';
+import { CloseMenuDirective } from './directives/close-menu.directive';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { DataService } from './services/data.service';
     JtPhonePipe,
     ErrorHeaderComponent,
     Error404Component,
-    RegistrationComponent
+    RegistrationComponent,
+    CloseMenuDirective
   ],
   imports: [
     BrowserModule,
