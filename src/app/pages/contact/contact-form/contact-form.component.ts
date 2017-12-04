@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { NgForm }   from '@angular/forms';
 
-import { DataService } from '../../../services/data.service';
+import { ContactService } from '../../../services/contact.service';
 import { Contact } from '../../../models/contact';
 
 @Component({
@@ -22,7 +22,7 @@ export class ContactFormComponent implements OnInit {
   submiting:boolean;
   model:Contact;
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: ContactService) { }
 
   ngOnInit() {
     this.initializeVariables();

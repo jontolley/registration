@@ -6,7 +6,7 @@ import { Group } from '../models/group';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class DataService {
+export class ContactService {
 
   API_URL = 'https://encampment-api.azurewebsites.net/api';
   //API_URL = 'http://localhost:19671/api';
@@ -31,24 +31,4 @@ export class DataService {
       );
     });
   }
-
-  public getGroups(): Observable<Group[]> {
-    return new Observable(observer => {
-      this.http.get(`${this.API_URL}/groups`)
-      .map(response => response.json())
-      .subscribe(
-        data => {
-          observer.next(data);
-        },
-        error => {          
-          let err = new Error(`Status Code: ${error.status}; ${error.statusText}`);
-          observer.error(err);
-        },
-        () => {
-          observer.complete();
-        }
-      );
-    });
-  }
-
 }

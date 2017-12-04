@@ -39,6 +39,10 @@ const routes: Routes = [
     component: ContactComponent
   },
   {
+    path: 'register',
+    loadChildren: './registration/registration.module#RegistrationModule'
+  },
+  {
     path: '404',
     component: Error404Component
   },

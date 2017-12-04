@@ -26,7 +26,7 @@ import { ScheduleDayComponent } from './components/schedule-day/schedule-day.com
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
 import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
 import { JtPhonePipe } from './pipes/jt-phone.pipe';
-import { DataService } from './services/data.service';
+import { ContactService } from './services/contact.service';
 import { CloseMenuDirective } from './directives/close-menu.directive';
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -63,7 +63,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     })
   ],
   providers: [
-    DataService
+    ContactService
   ],
   bootstrap: [AppComponent]
 })
