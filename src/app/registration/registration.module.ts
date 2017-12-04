@@ -4,6 +4,9 @@ import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
+// MODULES
+import { SharedModule } from './shared/shared.module';
+
 // ROUTING AND COMPONENTS
 import { RegistrationRoutingModule } from './registration-routing.module';
 import { AssignComponent } from './assign/assign.component';
@@ -11,12 +14,14 @@ import { RegisterComponent } from './register/register.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback/callback.component';
+import { SignupComponent } from './signup/signup.component';
 
 // SERVICES
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { DeactivateDelayService } from './services/deactivate-delay.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -28,20 +33,32 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 @NgModule({
   imports: [
     CommonModule,
-    RegistrationRoutingModule
+    RegistrationRoutingModule,
+    SharedModule
   ],
   declarations: [
     AssignComponent,
     RegisterComponent,
     UnauthorizedComponent,
     ProfileComponent,
-    CallbackComponent
+    CallbackComponent,
+    SignupComponent
   ],
   providers: [
     DataService,
     AuthService,
     UsersService,
-    AuthGuardService
+    AuthGuardService,
+    DeactivateDelayService,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
   ]
 })
-export class RegistrationModule { }
+export class RegistrationModule {
+  constructor(public auth: AuthService) {
+    auth.handleAuthentication();
+  }
+}

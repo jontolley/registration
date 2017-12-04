@@ -5,7 +5,6 @@ import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
 import { UsersService } from "../services/users.service";
 
-
 @Injectable()
 export class AuthService {
 
@@ -30,12 +29,13 @@ export class AuthService {
 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
+
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
 
         let afterLoginRedirect:string = localStorage.getItem('unauthenticated_requested_route');
-        let destination:string = afterLoginRedirect || '/home';
+        let destination:string = afterLoginRedirect || '/register';
 
         this.getProfile((err, profile) => {
           if(!err)
@@ -59,6 +59,8 @@ export class AuthService {
         alert(`Error: ${err.error}. Check the console for further details.`);
       } else {
         // no error or authResult
+        if (!this.isAuthenticated()) return;
+        
         this.getProfile((err, profile) => {
           if(!err)
             this.usersService.saveProfile(profile)

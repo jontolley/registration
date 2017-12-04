@@ -12,7 +12,7 @@ export class AuthGuardService implements CanActivate {
       localStorage.removeItem('unauthenticated_requested_route');
       return true;
     } else {
-      //this.router.navigate(['unauthorized']);
+      //this.router.navigate(['register','unauthorized']);
       let requestedRoute = state.url;
       localStorage.setItem('unauthenticated_requested_route', requestedRoute);
       this.auth.login();
