@@ -21,6 +21,8 @@
       "prefix": "camp",
       "styles": [
         "../node_modules/font-awesome/scss/font-awesome.scss",
+        "../node_modules/primeng/resources/themes/omega/theme.css",
+        "../node_modules/primeng/resources/primeng.min.css",
         "styles/styles.scss"
       ],
       "scripts": [

@@ -1,40 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { AuthHttp } from "angular2-jwt/angular2-jwt";
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
+import { User } from '../models/user';
+import { AuthProfile } from '../models/auth-profile';
 
 @Injectable()
 export class UsersService {
 
-  errorMessage: string;
+  userInfo:User;
 
-  userProfile:any;
-
-  constructor(private http: Http, private authHttp: AuthHttp, private data:DataService) {
+  constructor(private data:DataService) {
   }
 
-  public getUserInfo(): Observable<any> {
+  public getUser(): Observable<User> {
     return new Observable(observer => {
-      if (this.userProfile) {
-        observer.next(this.userProfile);
+      if (this.userInfo) {
+        observer.next(this.userInfo);
         observer.complete();
       } else {
         const accessToken = localStorage.getItem('access_token');
         if (!accessToken) {
-          observer.next({});
-          observer.complete();
+          let errorMessage = 'User is not authenticated';
+          observer.error(new Error(errorMessage));
         }
         
-        this.authHttp.get(`${this.data.API_URL}/users/current`)
-        .map(res => res.json())
+        this.data.getUser()
         .subscribe(
           data => {
-            this.userProfile = data;
+            this.userInfo = data;
             observer.next(data);
           },
           error => {
-            this.errorMessage = error;
             observer.error(error);
           },
           () => {
@@ -45,35 +41,62 @@ export class UsersService {
     });
   }
 
-  public saveProfile(profile): Observable<any> {
-    let user = {
-      subscriberId: profile.sub,
-      name: profile.name,
-      nickname: profile.nickname,
-      email: profile.email,
-      pictureUrl: profile.picture
-    };
-
+  public saveUser(profile:AuthProfile): Observable<User> {
     return new Observable(observer => {
-      this.authHttp.post(`${this.data.API_URL}/users`, user)
-      .map(res => res.json())
+      this.data.getUser()
       .subscribe(
         data => {
-          console.log(data);
-          this.userProfile = data;
+          this.userInfo = data;
           observer.next(data);
         },
         error => {
-          this.errorMessage = error;
-          console.log(error);
-          observer.error(error);
-        },
-        () => {
-          console.log('User Post Complete');
-          observer.complete();
+          // Unable to get User from API so save new user
+          let user = new User(
+            profile.sub,
+            profile.name,
+            profile.nickname,
+            profile.email,
+            profile.picture
+          );
+          this.data.saveUser(user)
+          .subscribe(
+            data => {
+              this.userInfo = data;
+              observer.next(data);
+            },
+            error => {
+              console.error(error);
+              observer.error(error);
+            },
+            () => {
+              console.log('User Post Complete');
+              observer.complete();
+            }
+          );
         }
-      );
+      );      
     });
   }
+
+  // public mapProfileToUser(profile:Profile):User {
+  //   return new User(
+  //     profile.sub,
+  //     profile.name,
+  //     profile.nickname,
+  //     profile.email,
+  //     profile.picture
+  //   );
+  // }
+
+  // public mapUserToProfile(user:User):Profile {
+  //   return new Profile(
+  //     user.subscriberId,
+  //     user.name,
+  //     user.email,
+  //     user.nickname,
+  //     user.pictureUrl,
+  //     true
+  //   );
+  // }
 
 }

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
-import { UsersService } from "../services/users.service";
+
+import { AuthProfile } from '../models/auth-profile';
+import { UsersService } from './users.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +21,7 @@ export class AuthService {
     scope: 'openid profile email'
   });
 
-  constructor(public router: Router, private usersService: UsersService) {}
+  constructor(public router: Router, private users: UsersService) {}
 
   public login(): void {
     this.auth0.authorize({ mode: "login" });
@@ -31,63 +35,54 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
 
       if (authResult && authResult.accessToken && authResult.idToken) {
+        // User just logged in so save session to local storage and load profile
         window.location.hash = '';
         this.setSession(authResult);
 
         let afterLoginRedirect:string = localStorage.getItem('unauthenticated_requested_route');
         let destination:string = afterLoginRedirect || '/register';
 
-        this.getProfile((err, profile) => {
-          if(!err)
-            this.usersService.saveProfile(profile)
-            .subscribe(
-              data => {
-                console.log('hello world');
-              },
-              error => {
-                console.error(error);
-              }
-            );
-          else
-            console.error(err);
-        });
+        // Post User information to API, this could be a first time user
+        this.getProfile()
+        .subscribe(
+          data => {
+            this.users.saveUser(data)
+            .subscribe();
+          },
+          error => {
+            console.error(error);
+          }
+        );
 
         this.router.navigate([destination]);
       } else if (err) {
+        // There was a error with authentication
         this.router.navigate(['/unauthorized']);
-        console.log(err);
+        console.error(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
-      } else {
-        // no error or authResult
-        if (!this.isAuthenticated()) return;
-        
-        this.getProfile((err, profile) => {
-          if(!err)
-            this.usersService.saveProfile(profile)
-            .subscribe(
-              data => {
-                console.log('hello world');
-              },
-              error => {
-                console.error(error);
-              }
-            );
-          else
-            console.error(err);
-        });
       }
+
+      if (!this.isAuthenticated()) return;
+
+      // TODO:load profile information (maybe)
     });
   }
 
-  public getProfile(cb): void {
-    const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      cb(new Error('Access token must exist to fetch profile'));
-      return;
-    }
+  public getProfile(): Observable<AuthProfile> {
+    return new Observable(observer => {
+      const accessToken = localStorage.getItem('access_token');
+      if (!accessToken) {
+        observer.error(new Error('Access token must exist to fetch profile'));
+      }
 
-    const self = this;
-    this.auth0.client.userInfo(accessToken, cb);
+      this.auth0.client.userInfo(accessToken, (err, profile) => {
+        if (err) observer.error(err)
+        else {
+          observer.next(profile);
+          observer.complete();
+        }
+      });
+    });
   }
 
   private setSession(authResult): void {

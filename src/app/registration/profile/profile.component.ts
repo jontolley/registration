@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../services/users.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'camp-profile',
@@ -9,19 +10,19 @@ import { UsersService } from '../services/users.service';
 export class ProfileComponent implements OnInit {
 
   busy = true;
-  profile: any;
+  userProfile: User;
 
   constructor(public usersService: UsersService) { }
 
   ngOnInit() {
-    if (this.usersService.userProfile) {
-      this.profile = this.usersService.userProfile;
+    if (this.usersService.userInfo) {
+      this.userProfile = this.usersService.userInfo;
       this.busy = false;
     } else {
-      this.usersService.getUserInfo()
+      this.usersService.getUser()
       .subscribe(
         data => {
-          this.profile = data;
+          this.userProfile = data;
           this.busy = false;
         },
         error => {
