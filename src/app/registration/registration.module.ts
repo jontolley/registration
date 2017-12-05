@@ -22,6 +22,8 @@ import { AuthService } from './services/auth.service';
 import { UsersService } from './services/users.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { DeactivateDelayService } from './services/deactivate-delay.service';
+import { AssignService } from './services/assign.service';
+import { RegisterService } from './services/register.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -45,8 +47,10 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     SignupComponent
   ],
   providers: [
+    AssignService,
+    RegisterService,
     DataService,
-    AuthService,
+    AuthService,    
     UsersService,
     AuthGuardService,
     DeactivateDelayService,

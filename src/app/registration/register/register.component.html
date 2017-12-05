@@ -1,5 +1,10 @@
-<div class="container">
+<camp-loading [busy]="busy"></camp-loading>
+
+<div class="container" *ngIf="!busy">
   <h1>register works!</h1>
+  <div class="col-12">
+    <pre>{{assignments | json}}</pre>
+  </div>
   <a [routerLink]="['assign']" class="btn btn-link">Assign</a>
   <a [routerLink]="['profile']" class="btn btn-link">Profile</a>
   <button type="button" class="btn btn-secondary" (click)="auth.logout()">Logout</button>
