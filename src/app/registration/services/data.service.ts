@@ -6,13 +6,13 @@ import { AuthHttp } from "angular2-jwt/angular2-jwt";
 
 import { User } from '../models/user';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
-import { Group } from '../../models/group';
+import { Group } from '../models/group';
 
 @Injectable()
 export class DataService {
 
-  public API_URL = 'http://localhost:19671/api';
-  //public API_URL = 'https://registrationapi.azurewebsites.net/api';
+  //private API_URL = 'http://localhost:19671/api';
+  private API_URL = 'https://encampment-api.azurewebsites.net/api';
 
   constructor(private http: Http, private authHttp: AuthHttp) { }
 

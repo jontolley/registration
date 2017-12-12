@@ -2,20 +2,19 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Contact } from '../models/contact';
-import { Group } from '../models/group';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ContactService {
 
-  API_URL = 'https://encampment-api.azurewebsites.net/api';
-  //API_URL = 'http://localhost:19671/api';
+  private API_URL = 'https://encampment-api.azurewebsites.net/api';
+  //private API_URL = 'http://localhost:19671/api';
   
   constructor(private http: Http) { }
 
   public sendContactMessage(contact:Contact): Observable<any> {
     return new Observable(observer => {
-      this.http.post(`${this.API_URL}/contact`, contact)
+      this.http.post(`${this.API_URL}/contacts`, contact)
       .map(response => response.json())
       .subscribe(
         data => {

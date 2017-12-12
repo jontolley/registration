@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Group } from '../../models/group';
 
 @Component({
   selector: 'camp-registration',
