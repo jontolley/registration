@@ -6,8 +6,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
 import * as auth0 from 'auth0-js';
 
-import { AuthProfile } from '../models/auth-profile';
+import { AuthInfo } from '../models/auth-info';
 import { UsersService } from './users.service';
+import { ErrorsService } from './errors.service';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,8 @@ export class AuthService {
     scope: 'openid profile email'
   });
 
-  constructor(public router: Router, private users: UsersService) {}
+  constructor(public router: Router, private users: UsersService,
+    private errorsService: ErrorsService) {}
 
   public login(): void {
     this.auth0.authorize({ mode: "login" });
@@ -35,51 +37,70 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
 
       if (authResult && authResult.accessToken && authResult.idToken) {
-        // User just logged in so save session to local storage and load profile
         window.location.hash = '';
         this.setSession(authResult);
 
-        let afterLoginRedirect:string = localStorage.getItem('unauthenticated_requested_route');
-        let destination:string = afterLoginRedirect || '/register';
-
-        // Post User information to API, this could be a first time user
-        this.getProfile()
+        this.users.LoadUser()
         .subscribe(
           data => {
-            this.users.saveUser(data)
-            .subscribe();
+            console.log('Got User Object', data);
           },
           error => {
-            console.error(error);
+            if (error.code === 404) {
+              // User not found to send to assignment page
+              this.router.navigate(['register','assign']);
+            }
+          },
+          () => {
+            this.router.navigate(['register']);
           }
         );
 
-        this.router.navigate([destination]);
       } else if (err) {
-        // There was a error with authentication
-        this.router.navigate(['/unauthorized']);
-        console.error(err);
+        this.router.navigate(['register','unauthorized']);
+        console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
+      } else {
+        if (this.isAuthenticated()) {
+          this.users.LoadUser()
+          .subscribe(
+            data => {
+              console.log('Got User Object', data);
+            },
+            error => {
+              if (error.code === 404) {
+                this.router.navigate(['register','assign']);
+              } else {
+                this.router.navigate(['home']);
+              }
+            },
+            () => {
+              this.router.navigate(['register']);
+            }
+          );
+        } else {
+          this.login();
+          console.log('Is NOT Authenticated');
+        }
       }
-
-      if (!this.isAuthenticated()) return;
-
-      // TODO:load profile information (maybe)
     });
   }
 
-  public getProfile(): Observable<AuthProfile> {
+  public fetchAuthInfo(): Observable<AuthInfo> {
+    
     return new Observable(observer => {
       const accessToken = localStorage.getItem('access_token');
       if (!accessToken) {
-        observer.error(new Error('Access token must exist to fetch profile'));
+        observer.error(this.errorsService.handleError('User is not authenticated'));
       }
-
+  
       this.auth0.client.userInfo(accessToken, (err, profile) => {
-        if (err) observer.error(err)
-        else {
+        if(!err) {
           observer.next(profile);
           observer.complete();
+        }
+        else {
+          observer.error(this.errorsService.handleError(err));
         }
       });
     });

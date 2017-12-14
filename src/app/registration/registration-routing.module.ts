@@ -17,8 +17,7 @@ const routes: Routes = [
   },
   {
     path: 'assign',
-    component: AssignComponent,    
-    canActivate: [AuthGuardService]
+    component: AssignComponent
   },
   {
     path: 'profile',

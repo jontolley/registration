@@ -10,19 +10,19 @@ import { User } from '../models/user';
 export class ProfileComponent implements OnInit {
 
   busy = true;
-  userProfile: User;
+  user: User;
 
-  constructor(public usersService: UsersService) { }
+  constructor(public users: UsersService) { }
 
   ngOnInit() {
-    if (this.usersService.userInfo) {
-      this.userProfile = this.usersService.userInfo;
+    if (this.users.user) {
+      this.user = this.users.user;
       this.busy = false;
     } else {
-      this.usersService.getUser()
+      this.users.LoadUser()
       .subscribe(
         data => {
-          this.userProfile = data;
+          this.user = data;
           this.busy = false;
         },
         error => {

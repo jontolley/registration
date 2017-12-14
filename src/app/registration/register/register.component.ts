@@ -42,41 +42,15 @@ export class RegisterComponent implements OnInit {
         this.busy = false;
       },
       error => {
-        console.error(error);
+        console.error(error.code, error.message);
         this.errorMessage = error;
         this.busy = false;
+
+        if(error.code === 404) {
+          this.router.navigate(['register','assign']);
+        }
       }
     );
-
-    // this.assign.getAssignments()
-    // .subscribe(
-    //   data => {
-    //     this.assignments = data;
-    //     if (data.numberOfSubgroups === 0) {
-    //       this.router.navigate(['register','assign']);
-    //       return;
-    //     }
-    //     this.busy = false;
-    //   },
-    //   error => {
-    //     console.error(error);
-    //     this.errorMessage = error;
-    //     this.busy = false;
-    //   }
-    // );
-
-    // this.register.getGroups()
-    // .subscribe(
-    //   data => {
-    //     this.groups = data;
-    //     this.busy = false;
-    //   },
-    //   error => {
-    //     console.error(error);
-    //     this.errorMessage = error;
-    //     this.busy = false;
-    //   }
-    // );
   }
 
 }

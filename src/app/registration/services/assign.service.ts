@@ -3,15 +3,16 @@ import { Observable } from 'rxjs/Observable';
 
 import { DataService } from './data.service';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
+import { UsersService } from './users.service';
 
 @Injectable()
 export class AssignService {
 
-  constructor(private data:DataService) { }
+  constructor(private users:UsersService) { }
 
   public getAssignments(): Observable<UserWithSubgroups> {
     return new Observable(observer => {
-      this.data.getAssignments()
+      this.users.getAssignments()
       .subscribe(
         data => {
           observer.next(data);

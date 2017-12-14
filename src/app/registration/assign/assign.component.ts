@@ -7,6 +7,7 @@ import { AssignService } from '../services/assign.service';
 import { RegisterService } from '../services/register.service';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { Group } from '../models/group';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'camp-assign',
@@ -21,22 +22,34 @@ export class AssignComponent implements OnInit {
   assignments:UserWithSubgroups;
   groups:Group[];
   
-  constructor(private assign:AssignService, private register:RegisterService) { }
+  constructor(private assign:AssignService, private register:RegisterService,
+    public authService: AuthService) { }
 
   ngOnInit() {
-    Observable.forkJoin(
-      this.assign.getAssignments(),
-      this.register.getGroups()
-    )
+    this.register.getGroups()
     .subscribe(
       data => {
-        this.assignments = data[0];
-        this.groups = data[1];
+        this.groups = data;
         this.busy = false;
       },
       error => {
         console.error(error);
         this.errorMessage = error;
+        this.busy = false;
+      }
+    );
+
+    this.assign.getAssignments()
+    .subscribe(
+      data => {
+        this.assignments = data;
+        this.busy = false;
+      },
+      error => {
+        if (error.code !== 404) {
+          console.error(error);
+          this.errorMessage = error;
+        }
         this.busy = false;
       }
     );

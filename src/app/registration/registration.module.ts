@@ -24,6 +24,8 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { DeactivateDelayService } from './services/deactivate-delay.service';
 import { AssignService } from './services/assign.service';
 import { RegisterService } from './services/register.service';
+import { ErrorsService } from './services/errors.service';
+import { MappingService } from './services/mapping.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -49,6 +51,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   providers: [
     AssignService,
     RegisterService,
+    ErrorsService,
+    MappingService,
     DataService,
     AuthService,    
     UsersService,
@@ -62,7 +66,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   ]
 })
 export class RegistrationModule {
-  constructor(public auth: AuthService) {
+  constructor(private auth: AuthService) {
     auth.handleAuthentication();
   }
 }

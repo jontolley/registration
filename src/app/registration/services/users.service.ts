@@ -2,101 +2,105 @@ import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
-import { AuthProfile } from '../models/auth-profile';
+import { AuthInfo } from '../models/auth-info';
+import { AuthHttp } from 'angular2-jwt';
+import { ErrorsService } from './errors.service';
+import { MappingService } from './mapping.service';
+import { UserWithSubgroups } from '../models/userWithSubgroups';
 
 @Injectable()
 export class UsersService {
+  
+  user: User;
+  
+  private loadingUserObservable: Observable<User>;
 
-  userInfo:User;
-
-  constructor(private data:DataService) {
+  constructor(private authHttp: AuthHttp, private data: DataService,
+    private errorsService: ErrorsService, private mapping: MappingService) {
   }
 
-  public getUser(): Observable<User> {
-    return new Observable(observer => {
-      if (this.userInfo) {
-        observer.next(this.userInfo);
+  public LoadUser(): Observable<User> {
+    if (this.loadingUserObservable) return this.loadingUserObservable;
+
+    this.loadingUserObservable = new Observable(observer => {
+      if (this.user) {
+        observer.next(this.user);
         observer.complete();
       } else {
-        const accessToken = localStorage.getItem('access_token');
-        if (!accessToken) {
-          let errorMessage = 'User is not authenticated';
-          observer.error(new Error(errorMessage));
-        }
-        
-        this.data.getUser()
+        this.authHttp.get(`${this.data.API_URL}/users/current`)
+        .map(res => res.json())
         .subscribe(
           data => {
-            this.userInfo = data;
+            this.user = data;
             observer.next(data);
           },
           error => {
-            observer.error(error);
+            this.user = undefined;
+            observer.error(this.errorsService.handleError(error));
+            this.loadingUserObservable = undefined;
           },
           () => {
             observer.complete();
+            this.loadingUserObservable = undefined;
           }
-        );
+        );      
       }
     });
+
+    return this.loadingUserObservable;
   }
 
-  public saveUser(profile:AuthProfile): Observable<User> {
+  public updateUser(authInfo: AuthInfo): void {
+    this.user = this.mapping.authInfoToUser(authInfo);
+    
+    this.authHttp.put(`${this.data.API_URL}/users/current`, this.user)
+    .map(res => res.json())
+    .subscribe(
+      data => { },
+      error => {
+        this.user = undefined;
+        this.errorsService.handleError(error);
+      },
+      () => {
+        console.log('Updated User');
+      }
+    );
+  }
+
+  public createUser(authInfo: AuthInfo): void {
+    let newUser = this.mapping.authInfoToUser(authInfo);
+
+    this.authHttp.post(`${this.data.API_URL}/users/current`, newUser)
+    .map(res => res.json())
+    .subscribe(
+      data => {
+        this.user = data;
+      },
+      error => {
+        this.user = undefined;
+        this.errorsService.handleError(error);
+      },
+      () => {
+        console.log('Created New User');
+      }
+    );
+  }
+
+  public getAssignments(): Observable<UserWithSubgroups> {
     return new Observable(observer => {
-      this.data.getUser()
+      this.authHttp.get(`${this.data.API_URL}/users/current/assignment`)
+      .map(res => res.json())
       .subscribe(
         data => {
-          this.userInfo = data;
           observer.next(data);
         },
         error => {
-          // Unable to get User from API so save new user
-          let user = new User(
-            profile.sub,
-            profile.name,
-            profile.nickname,
-            profile.email,
-            profile.picture
-          );
-          this.data.saveUser(user)
-          .subscribe(
-            data => {
-              this.userInfo = data;
-              observer.next(data);
-            },
-            error => {
-              console.error(error);
-              observer.error(error);
-            },
-            () => {
-              console.log('User Post Complete');
-              observer.complete();
-            }
-          );
+          observer.error(this.errorsService.handleError(error));
+        },
+        () => {
+          observer.complete();
         }
-      );      
+      );
     });
   }
-
-  // public mapProfileToUser(profile:Profile):User {
-  //   return new User(
-  //     profile.sub,
-  //     profile.name,
-  //     profile.nickname,
-  //     profile.email,
-  //     profile.picture
-  //   );
-  // }
-
-  // public mapUserToProfile(user:User):Profile {
-  //   return new Profile(
-  //     user.subscriberId,
-  //     user.name,
-  //     user.email,
-  //     user.nickname,
-  //     user.pictureUrl,
-  //     true
-  //   );
-  // }
-
 }
