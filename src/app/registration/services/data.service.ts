@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { Group } from '../models/group';
 import { ErrorsService } from './errors.service';
+import { Subgroup } from '../models/subgroup';
 
 @Injectable()
 export class DataService {
@@ -21,6 +22,24 @@ export class DataService {
   public getGroups(): Observable<Group[]> {
     return new Observable(observer => {
       this.authHttp.get(`${this.API_URL}/groups`)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          observer.next(data);
+        },
+        error => {
+          observer.error(this.errorsService.handleError(error));
+        },
+        () => {
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public getSubgroups(groupId:number): Observable<Subgroup[]> {
+    return new Observable(observer => {
+      this.authHttp.get(`${this.API_URL}/groups/${groupId}/subgroups`)
       .map(res => res.json())
       .subscribe(
         data => {

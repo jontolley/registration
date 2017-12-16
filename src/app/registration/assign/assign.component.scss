@@ -1,0 +1,42 @@
+.fixed-height {
+    min-height: 600px;
+}
+
+.select-list {
+
+    h2 {
+        margin-top: 10px;
+    }
+
+    .selected {
+        background-color:green;
+    }
+      
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    li {
+        font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+        padding: 5px 20px;
+        text-decoration: none;
+        color: #000;
+        transition: font-size 0.3s ease, background-color 0.3s ease;
+        display: block;
+        cursor: pointer;
+
+        label {
+            margin-bottom: 0;
+        }
+        
+        input {
+            line-height: 1em;
+        }
+
+        &:hover {
+            color: blue;
+        }
+    }
+}

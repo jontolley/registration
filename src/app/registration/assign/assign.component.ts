@@ -8,6 +8,7 @@ import { RegisterService } from '../services/register.service';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { Group } from '../models/group';
 import { AuthService } from '../services/auth.service';
+import { Subgroup } from '../models/subgroup';
 
 @Component({
   selector: 'camp-assign',
@@ -17,25 +18,36 @@ import { AuthService } from '../services/auth.service';
 export class AssignComponent implements OnInit {
 
   errorMessage:string;
-  busy:boolean = true;
+  loadingGroups:boolean = true;
+  loadingSubgroups: boolean = true;
 
   assignments:UserWithSubgroups;
   groups:Group[];
+  subgroups:Subgroup[];
+  selectedGroup:Group;
+  selectedSubgroup:Subgroup;
   
   constructor(private assign:AssignService, private register:RegisterService,
-    public authService: AuthService) { }
+    public authService: AuthService) {
+      this.groups = [];
+      this.subgroups = [];
+    }
 
   ngOnInit() {
     this.register.getGroups()
     .subscribe(
       data => {
         this.groups = data;
-        this.busy = false;
+        this.selectedGroup = data[0] || undefined;
+        this.loadingGroups = false;
+        if (this.selectedGroup) {
+          this.groupSelected(this.selectedGroup);
+        }
       },
       error => {
         console.error(error);
         this.errorMessage = error;
-        this.busy = false;
+        this.loadingGroups = false;
       }
     );
 
@@ -43,15 +55,40 @@ export class AssignComponent implements OnInit {
     .subscribe(
       data => {
         this.assignments = data;
-        this.busy = false;
       },
       error => {
         if (error.code !== 404) {
           console.error(error);
           this.errorMessage = error;
         }
-        this.busy = false;
       }
     );
+  }
+  
+  groupSelected(group:Group) {
+    this.selectedGroup = group;
+    this.loadingSubgroups = true;
+
+    this.register.getSubgroups(group.id)
+    .subscribe(
+      data => {
+        this.subgroups = data;
+      },
+      error => {
+        console.error(error);
+        this.errorMessage = error;
+      },
+      () => {
+        this.loadingSubgroups = false;
+      }
+    );
+  }
+  
+  subgroupSelected(subgroup:Subgroup) {
+    this.selectedSubgroup = subgroup;
+  }
+
+  addSubgroup(subgroup:Subgroup) {
+    console.log('assign Subgroup', subgroup);
   }
 }
