@@ -9,6 +9,7 @@ import { AssignService } from '../services/assign.service';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { RegisterService } from '../services/register.service';
 import { Group } from '../models/group';
+import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 @Component({
   selector: 'camp-register',
@@ -48,6 +49,8 @@ export class RegisterComponent implements OnInit {
 
         if(error.code === 404) {
           this.router.navigate(['register','assign']);
+        } else {
+          this.router.navigate(['error']);
         }
       }
     );

@@ -29,6 +29,7 @@ import { JtPhonePipe } from './pipes/jt-phone.pipe';
 import { ContactService } from './services/contact.service';
 import { CloseMenuDirective } from './directives/close-menu.directive';
 import { TextMaskModule } from 'angular2-text-mask';
+import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     ErrorHeaderComponent,
     Error404Component,
     RegistrationComponent,
-    CloseMenuDirective
+    CloseMenuDirective,
+    ErrorUnexpectedComponent
   ],
   imports: [
     BrowserModule,

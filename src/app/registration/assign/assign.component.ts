@@ -9,6 +9,7 @@ import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { Group } from '../models/group';
 import { AuthService } from '../services/auth.service';
 import { Subgroup } from '../models/subgroup';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'camp-assign',
@@ -28,7 +29,7 @@ export class AssignComponent implements OnInit {
   selectedSubgroup:Subgroup;
   
   constructor(private assign:AssignService, private register:RegisterService,
-    public authService: AuthService) {
+    private router: Router, public authService: AuthService) {
       this.groups = [];
       this.subgroups = [];
     }
@@ -46,8 +47,8 @@ export class AssignComponent implements OnInit {
       },
       error => {
         console.error(error);
-        this.errorMessage = error;
         this.loadingGroups = false;
+        this.router.navigate(['error']);
       }
     );
 
@@ -59,7 +60,7 @@ export class AssignComponent implements OnInit {
       error => {
         if (error.code !== 404) {
           console.error(error);
-          this.errorMessage = error;
+          this.router.navigate(['error']);
         }
       }
     );

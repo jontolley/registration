@@ -49,6 +49,8 @@ export class AuthService {
             if (error.code === 404) {
               // User not found to send to assignment page
               this.router.navigate(['register','assign']);
+            } else {
+              this.router.navigate(['error']);
             }
           },
           () => {
@@ -71,7 +73,7 @@ export class AuthService {
               if (error.code === 404) {
                 this.router.navigate(['register','assign']);
               } else {
-                this.router.navigate(['home']);
+                this.router.navigate(['error']);
               }
             },
             () => {
