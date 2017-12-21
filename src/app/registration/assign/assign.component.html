@@ -13,6 +13,7 @@
     <h1 class="col-12">Registration Selection</h1>
     <div class="col-12">
       <button (click)="authService.logout()" class="btn btn-outline-primary my-3">Logout</button>
+      <a class="btn btn-secondary" [routerLink]="['/register']">Register</a>
     </div>
     <div class="col-xs-12 col-md-3 select-list">
       <h2>Stakes</h2>
@@ -35,15 +36,16 @@
       </div>
       <div *ngIf="!loadingSubgroups">
         <ul *ngIf="subgroups?.length>0">
-          <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
+          <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
             <div class="row justify-content-between form-inline">
               <div class="col-md-auto">
                 {{subgroup.name}}
               </div>
+              <button *ngIf="isAssigned(subgroup)" class="btn btn-outline-secondary btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
               <div *ngIf="selectedSubgroup?.id === subgroup.id" class="col-md-auto input-group">
-                <input type="text" class="form-control" placeholder="Pin">
+                <input type="text" class="form-control" placeholder="Pin" #pinInput>
                 <span class="input-group-btn">
-                  <button class="btn btn-secondary btn-sm" type="button" (click)="addSubgroup(subgroup)">Add</button>
+                  <button class="btn btn-secondary btn-sm" type="button" (click)="addSubgroup(subgroup, pinInput.value)">Add</button>
                 </span>
               </div>
             </div>

@@ -40,14 +40,21 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
 
-        this.users.LoadUser()
+        this.users.GetUser()
         .subscribe(
           data => {
             console.log('Got User Object', data);
           },
           error => {
             if (error.code === 404) {
-              // User not found to send to assignment page
+              // User not found to create and send to assignment page
+              this.fetchAuthInfo()
+              .subscribe(
+                data => {
+                  this.users.createUser(data);
+                }
+              );
+
               this.router.navigate(['register','assign']);
             } else {
               this.router.navigate(['error']);
@@ -64,13 +71,20 @@ export class AuthService {
         alert(`Error: ${err.error}. Check the console for further details.`);
       } else {
         if (this.isAuthenticated()) {
-          this.users.LoadUser()
+          this.users.GetUser()
           .subscribe(
             data => {
               console.log('Got User Object', data);
             },
             error => {
               if (error.code === 404) {
+                // User not found to create and send to assignment page
+                this.fetchAuthInfo()
+                .subscribe(
+                  data => {
+                    this.users.createUser(data);
+                  }
+                );
                 this.router.navigate(['register','assign']);
               } else {
                 this.router.navigate(['error']);

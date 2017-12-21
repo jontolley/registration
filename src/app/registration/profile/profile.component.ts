@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
       this.user = this.users.user;
       this.busy = false;
     } else {
-      this.users.LoadUser()
+      this.users.GetUser()
       .subscribe(
         data => {
           this.user = data;

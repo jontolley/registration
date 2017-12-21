@@ -19,7 +19,7 @@ export class UsersService {
     private errorsService: ErrorsService, private mapping: MappingService) {
   }
 
-  public LoadUser(): Observable<User> {
+  public GetUser(): Observable<User> {
     if (this.loadingUserObservable) return this.loadingUserObservable;
 
     this.loadingUserObservable = new Observable(observer => {
@@ -84,23 +84,5 @@ export class UsersService {
         console.log('Created New User');
       }
     );
-  }
-
-  public getAssignments(): Observable<UserWithSubgroups> {
-    return new Observable(observer => {
-      this.authHttp.get(`${this.data.API_URL}/users/current/assignment`)
-      .map(res => res.json())
-      .subscribe(
-        data => {
-          observer.next(data);
-        },
-        error => {
-          observer.error(this.errorsService.handleError(error));
-        },
-        () => {
-          observer.complete();
-        }
-      );
-    });
   }
 }

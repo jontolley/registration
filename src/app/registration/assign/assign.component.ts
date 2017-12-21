@@ -10,6 +10,8 @@ import { Group } from '../models/group';
 import { AuthService } from '../services/auth.service';
 import { Subgroup } from '../models/subgroup';
 import { Router } from '@angular/router';
+import { SubgroupWithPin } from '../models/subgroupWithPin';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'camp-assign',
@@ -29,7 +31,7 @@ export class AssignComponent implements OnInit {
   selectedSubgroup:Subgroup;
   
   constructor(private assign:AssignService, private register:RegisterService,
-    private router: Router, public authService: AuthService) {
+    private router: Router, public authService: AuthService, private usersService:UsersService) {
       this.groups = [];
       this.subgroups = [];
     }
@@ -66,7 +68,7 @@ export class AssignComponent implements OnInit {
     );
   }
   
-  groupSelected(group:Group) {
+  groupSelected(group:Group): void {
     this.selectedGroup = group;
     this.loadingSubgroups = true;
 
@@ -85,11 +87,54 @@ export class AssignComponent implements OnInit {
     );
   }
   
-  subgroupSelected(subgroup:Subgroup) {
+  subgroupSelected(subgroup:Subgroup): void {
     this.selectedSubgroup = subgroup;
   }
 
-  addSubgroup(subgroup:Subgroup) {
-    console.log('assign Subgroup', subgroup);
+  isAssigned(subgroup:Subgroup): boolean {
+    let assigned = false;    
+    let x = this.assignments.subgroups;
+    this.assignments.subgroups.forEach(element => {
+      if (subgroup.id === element.id) assigned = true;
+    });
+    return assigned;
   }
+
+  addSubgroup(subgroup:Subgroup, pin:string): void {
+
+    let subgroupWithPin = new SubgroupWithPin();
+    subgroupWithPin.id = subgroup.id;
+    subgroupWithPin.pin = pin;
+    this.assign.makeAssignment(subgroupWithPin)
+    .subscribe(
+      data => {
+        this.assignments.subgroups.push(this.selectedSubgroup);
+        console.log('new assignment', data);
+        this.selectedSubgroup = undefined;
+      },
+      error => {
+        this.selectedSubgroup = undefined;
+        alert("Invalid Pin");
+        console.error('no assignment', error);
+      }
+    );
+    console.log('assign Subgroup', pin, subgroup);
+  }
+
+  removeSubgroup(subgroupId:number): void {
+        this.assign.removeAssignment(subgroupId)
+        .subscribe(
+          data => {
+            let position = this.assignments.subgroups.findIndex((value, index, obj) => {
+              return value.id === subgroupId;
+            });
+            this.assignments.subgroups.splice(position, 1);
+            console.log('removed assignment', subgroupId);
+            this.selectedSubgroup = undefined;
+          },
+          error => {
+            console.error('no assignment', error);
+          }
+        );
+      }
 }
