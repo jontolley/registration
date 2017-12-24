@@ -9,7 +9,9 @@ import { AssignService } from '../services/assign.service';
 import { UserWithSubgroups } from '../models/userWithSubgroups';
 import { RegisterService } from '../services/register.service';
 import { Group } from '../models/group';
+import { Attendee } from '../models/attendee';
 import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
+import { Subgroup } from '../models/subgroup';
 
 @Component({
   selector: 'camp-register',
@@ -20,26 +22,27 @@ export class RegisterComponent implements OnInit {
 
   errorMessage:string;
   busy:boolean = true;
+  loadingAttendees:boolean = false;
+  loadingAttendee:boolean = false;
 
   assignments:UserWithSubgroups;
-  groups:Group[];
+  selectedSubgroup:Subgroup;
+  attendees:Attendee[];
+  selectedAttendee:Attendee;
 
   constructor(private auth: AuthService, private router: Router,
     private assign:AssignService, private register:RegisterService) { }
 
   ngOnInit() {
-    Observable.forkJoin(
-      this.assign.getAssignments(),
-      this.register.getGroups()
-    )
+    this.assign.getAssignments()
     .subscribe(
       data => {
-        this.assignments = data[0];
+        this.assignments = data;
         if (this.assignments.numberOfSubgroups === 0) {
           this.router.navigate(['register','assign']);
           return;
         }
-        this.groups = data[1];
+        this.subgroupSelected(this.assignments.subgroups[0]);
         this.busy = false;
       },
       error => {
@@ -54,6 +57,46 @@ export class RegisterComponent implements OnInit {
         }
       }
     );
+  } 
+  
+  subgroupSelected(subgroup:Subgroup): void {
+    this.selectedSubgroup = subgroup;
+    this.selectedAttendee = undefined;
+    this.loadingAttendees = true;
+    
+    this.register.getAttendeeStubs(
+      this.selectedSubgroup.groupId, this.selectedSubgroup.id)
+      .subscribe(
+        data => {
+          this.attendees = data;
+          if (this.attendees && this.attendees.length > 0) {
+            this.attendeeSelected(this.attendees[0]);
+          }
+          this.loadingAttendees = false;
+        },
+        error => {
+          this.errorMessage = error;
+          this.loadingAttendees = false;
+        }
+      );
+  }
+
+  attendeeSelected(attendee:Attendee): void {
+    this.selectedAttendee = attendee;
+
+    this.loadingAttendee = true;
+    this.register.getAttendee(
+      this.selectedSubgroup.groupId, this.selectedSubgroup.id, attendee.id)
+      .subscribe(
+        data => {
+          this.selectedAttendee = data;
+          this.loadingAttendee = false;
+        },
+        error => {
+          this.errorMessage = error;
+          this.loadingAttendee = false;
+        }
+      );
   }
 
 }

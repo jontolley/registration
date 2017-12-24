@@ -10,7 +10,8 @@
       </div>
     </div>
 
-    <h1 class="col-12">Registration Selection</h1>
+    <h1 class="col-12">Ward Assignment</h1>
+    <h3 class="col-12">Select and enter the pin for the ward you will be registering.</h3>
     <div class="col-12">
       <button (click)="authService.logout()" class="btn btn-outline-primary my-3">Logout</button>
       <a class="btn btn-secondary" [routerLink]="['/register']">Register</a>
@@ -22,7 +23,7 @@
       </div>
       <div *ngIf="!loadingGroups">
         <ul *ngIf="groups?.length>0">
-          <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id" class="selectable-list-item" (click)="groupSelected(group)">{{group.name}}</li>
+          <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id" [class.assigned]="isGroupAssigned(group)" class="selectable-list-item" (click)="groupSelected(group)">{{group.name}}</li>
         </ul>
         <div *ngIf="groups?.length===0">
           No Stakes Found
@@ -36,13 +37,13 @@
       </div>
       <div *ngIf="!loadingSubgroups">
         <ul *ngIf="subgroups?.length>0">
-          <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
+          <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isSubgroupAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
             <div class="row justify-content-between form-inline">
               <div class="col-md-auto">
                 {{subgroup.name}}
               </div>
-              <button *ngIf="isAssigned(subgroup)" class="btn btn-outline-secondary btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
-              <div *ngIf="selectedSubgroup?.id === subgroup.id" class="col-md-auto input-group">
+              <button *ngIf="isSubgroupAssigned(subgroup)" class="btn btn-outline-secondary btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
+              <div *ngIf="!isSubgroupAssigned(subgroup) && (selectedSubgroup?.id === subgroup.id)" class="col-md-auto input-group">
                 <input type="text" class="form-control" placeholder="Pin" #pinInput>
                 <span class="input-group-btn">
                   <button class="btn btn-secondary btn-sm" type="button" (click)="addSubgroup(subgroup, pinInput.value)">Add</button>

@@ -1,11 +1,61 @@
 <camp-loading [busy]="busy"></camp-loading>
 
-<div class="container" *ngIf="!busy">
-  <h1>register works!</h1>
-  <div class="col-12">
-    <pre>{{assignments | json}}</pre>
-  </div>
-  <a [routerLink]="['assign']" class="btn btn-link">Assign</a>
-  <a [routerLink]="['profile']" class="btn btn-link">Profile</a>
-  <button type="button" class="btn btn-secondary" (click)="auth.logout()">Logout</button>
+<div class="container fixed-height" *ngIf="!busy">
+  <div class="row">
+    <div class="col-12">
+        <h1>Register Attendees</h1>
+    </div>
+    <div class="col-12">
+      <a [routerLink]="['assign']" class="btn btn-primary">Assign</a>
+      <a [routerLink]="['profile']" class="btn btn-primary">Profile</a>
+      <button type="button" class="btn btn-secondary" (click)="auth.logout()">Logout</button>
+    </div>
+    
+    <div class="col-xs-12 col-md-3 select-list">
+      <h2>Wards</h2>
+      <div>
+        <ul *ngIf="assignments.subgroups?.length>0">
+          <li *ngFor="let subgroup of assignments.subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" class="selectable-list-item" (click)="subgroupSelected(subgroup)">{{subgroup.name}}</li>
+        </ul>
+        <div *ngIf="assignments.subgroups?.length===0">
+          No Wards Found
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-3 select-list">
+      <h2>Attendees</h2>
+      <div *ngIf="loadingAttendees">
+        Loading...
+      </div>
+      <div *ngIf="!loadingAttendees">
+        <ul>
+          <li *ngFor="let attendee of attendees" [class.selected]="selectedAttendee?.id === attendee.id" class="selectable-list-item" (click)="attendeeSelected(attendee)">
+            <div class="row">
+              <div class="col-md-auto">
+                {{attendee.firstName}}
+              </div>
+            </div>
+          </li>
+          <li>Add Attendee <button class="btn btn-sm btn-primary">Add</button></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="col-xs-12 col-md-3 select-list">
+      <div *ngIf="loadingAttendee">
+        Loading...
+      </div>
+      <div *ngIf="!loadingAttendee">
+        <div *ngIf="!selectedAttendee">
+          <h2>No Attendees</h2>
+        </div>
+        <div *ngIf="selectedAttendee">
+          <h2>{{selectedAttendee.firstName}} {{selectedAttendee.lastName}}</h2>
+          <pre>{{selectedAttendee | json}}</pre>
+        </div>
+      </div>
+    </div>
+    
+  </div> 
 </div>

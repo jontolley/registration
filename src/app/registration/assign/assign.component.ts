@@ -90,8 +90,17 @@ export class AssignComponent implements OnInit {
   subgroupSelected(subgroup:Subgroup): void {
     this.selectedSubgroup = subgroup;
   }
-
-  isAssigned(subgroup:Subgroup): boolean {
+  
+  isGroupAssigned(group:Group): boolean {
+    let assigned = false;    
+    let x = this.assignments.subgroups;
+    this.assignments.subgroups.forEach(element => {
+      if (group.id === element.groupId) assigned = true;
+    });
+    return assigned;
+  }
+    
+  isSubgroupAssigned(subgroup:Subgroup): boolean {
     let assigned = false;    
     let x = this.assignments.subgroups;
     this.assignments.subgroups.forEach(element => {
