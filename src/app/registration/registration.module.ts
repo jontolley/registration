@@ -26,6 +26,9 @@ import { AssignService } from './services/assign.service';
 import { RegisterService } from './services/register.service';
 import { ErrorsService } from './services/errors.service';
 import { MappingService } from './services/mapping.service';
+import { AttendeeFormComponent } from './attendee-form/attendee-form.component';
+import { AttendeeService } from './services/attendee.service';
+import { FormsModule } from '@angular/forms';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -37,6 +40,7 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RegistrationRoutingModule,
     SharedModule
   ],
@@ -46,11 +50,13 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     UnauthorizedComponent,
     ProfileComponent,
     CallbackComponent,
-    SignupComponent
+    SignupComponent,
+    AttendeeFormComponent
   ],
   providers: [
     AssignService,
     RegisterService,
+    AttendeeService,
     ErrorsService,
     MappingService,
     DataService,

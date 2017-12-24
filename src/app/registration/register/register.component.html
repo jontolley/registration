@@ -42,7 +42,7 @@
       </div>
     </div>
     
-    <div class="col-xs-12 col-md-3 select-list">
+    <div class="col-xs-12 col-md-6 select-list">
       <div *ngIf="loadingAttendee">
         Loading...
       </div>
@@ -51,8 +51,9 @@
           <h2>No Attendees</h2>
         </div>
         <div *ngIf="selectedAttendee">
-          <h2>{{selectedAttendee.firstName}} {{selectedAttendee.lastName}}</h2>
-          <pre>{{selectedAttendee | json}}</pre>
+          <camp-attendee-form [groupId]="selectedSubgroup.groupId" [subgroupId]="selectedSubgroup.id" [attendee]="selectedAttendee"></camp-attendee-form>
+          <!-- <h2>{{selectedAttendee.firstName}} {{selectedAttendee.lastName}}</h2>
+          <pre>{{selectedAttendee | json}}</pre> -->
         </div>
       </div>
     </div>

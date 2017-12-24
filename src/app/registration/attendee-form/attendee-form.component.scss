@@ -1,0 +1,45 @@
+@import '~styles/variables';
+
+.attendeeForm {
+    .header {
+        text-transform: uppercase;
+    }
+
+    .saving-icon {
+      width: 23px;
+    }
+}
+
+.contact-display {
+  label {
+    font-weight: bold;
+  }
+}
+
+form {
+  label {
+    margin-bottom: 0.15rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+
+    .required {
+      float: right;
+      text-transform: uppercase;
+      font-size: 0.8em;
+      font-weight: bold;
+      color: #e2e2e2;
+    }
+    
+    &.form-error {
+      .error-message {
+        color: #e92424;
+      }
+
+      input, textarea {
+        border: 1px solid #e92424;
+      }      
+    }
+  }
+}

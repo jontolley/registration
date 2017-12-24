@@ -1,0 +1,62 @@
+<!-- <camp-error-header [message]="errorMessage"></camp-error-header> -->
+
+<div class="container">
+  <div class="attendeeForm">
+    <div class="my-4 header">Complete this form to register an attendee.</div>
+    <form (ngSubmit)="onSubmit()" #attendeeForm="ngForm">
+      <div class="form-row">
+        <div class="form-group col-md-6" [class.form-error]="firstName.invalid && (firstName.dirty || submitFailed)">
+          <label for="inputFirstName">First Name</label>
+          <label [class.error-message]="firstName.hasError('required')" class="required">required</label>
+          <input type="text" class="form-control" id="inputFirstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
+            required>
+        </div>
+        <div class="form-group col-md-6" [class.form-error]="lastName.invalid && (lastName.dirty || submitFailed)">
+          <label for="inputLastName">Last Name</label>
+          <label [class.error-message]="lastName.hasError('required')" class="required">required</label>
+          <input type="text" class="form-control" id="inputLastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
+            required>
+        </div>
+      </div>
+      <!-- <div class="form-row">
+        <div class="form-group col-md-6"
+          [class.form-error]="(email.hasError('required') && (email.dirty || submitFailed)) || (email.hasError('email') && submitFailed)">
+          <label for="inputEmail">Email</label>
+          <label [class.error-message]="email.hasError('required')" class="required">required</label>
+          <input type="email" class="form-control" id="inputEmail" [(ngModel)]="model.email" name="email" #email="ngModel" required email>
+          <div *ngIf="(email.hasError('email') && !email.hasError('required')) && submitFailed" [class.error-message]="email.hasError('email')">
+            <small class="text-uppercase">Please enter a valid email address</small></div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [class.form-error]="phoneNumber.invalid && (phoneNumber.dirty || submitFailed)">
+          <label for="inputPhoneNumber">Phone Number</label>
+          <input type="text" class="form-control" id="inputPhoneNumber" [textMask]="{mask: phoneMask}" [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6" [class.form-error]="stake.invalid && (stake.dirty || submitFailed)">
+          <label for="inputStake">Stake</label>
+          <input type="text" class="form-control" id="inputStake" [(ngModel)]="model.stake" name="stake" #stake="ngModel">
+        </div>
+        <div class="form-group col-md-6" [class.form-error]="ward.invalid && (ward.dirty || submitFailed)">
+          <label for="inputWard">Ward</label>
+          <input type="text" class="form-control" id="inputWard" [(ngModel)]="model.ward" name="ward" #ward="ngModel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" [class.form-error]="message.invalid && (message.dirty || submitFailed)">
+          <label for="inputMessage">Message</label>
+          <label [class.error-message]="message.hasError('required')" class="required">required</label>
+          <textarea type="text" class="form-control" id="inputMessage" required [(ngModel)]="model.message" name="message" #message="ngModel"
+            rows="3" required></textarea>
+        </div>
+      </div> -->
+      <div class="my-3">
+        <button type="submit" class="btn btn-success" [hidden]="submiting">Save</button>
+        <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
+        <button type="reset" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()">Reset</button>
+      </div>
+    </form>
+  </div>  
+</div>
