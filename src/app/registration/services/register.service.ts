@@ -11,12 +11,12 @@ import { ErrorsService } from './errors.service';
 @Injectable()
 export class RegisterService {
 
-  constructor(private authHttp: AuthHttp, private data: DataService,
+  constructor(private authHttp: AuthHttp, private dataService: DataService,
     private errorsService: ErrorsService) { }
 
   public getGroups(): Observable<Group[]> {
     return new Observable(observer => {
-      this.authHttp.get(`${this.data.API_URL}/groups`)
+      this.authHttp.get(`${this.dataService.API_URL}/groups`)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -34,7 +34,7 @@ export class RegisterService {
 
   public getSubgroups(groupId:number): Observable<Subgroup[]> {
     return new Observable(observer => {
-      this.authHttp.get(`${this.data.API_URL}/groups/${groupId}/subgroups`)
+      this.authHttp.get(`${this.dataService.API_URL}/groups/${groupId}/subgroups`)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -52,7 +52,7 @@ export class RegisterService {
 
   public getAttendeeStubs(groupId:number, subgroupId:number): Observable<Attendee[]> {
     return new Observable(observer => {
-      this.authHttp.get(`${this.data.API_URL}/groups/${groupId}/subgroups/${subgroupId}/attendeestubs`)
+      this.authHttp.get(`${this.dataService.API_URL}/groups/${groupId}/subgroups/${subgroupId}/attendeestubs`)
       .map(res => res.json())
       .subscribe(
         data => {
@@ -70,7 +70,7 @@ export class RegisterService {
 
   public getAttendee(groupId:number, subgroupId:number, attendeeId:number): Observable<Attendee> {
     return new Observable(observer => {
-      this.authHttp.get(`${this.data.API_URL}/groups/${groupId}/subgroups/${subgroupId}/attendees/${attendeeId}`)
+      this.authHttp.get(`${this.dataService.API_URL}/groups/${groupId}/subgroups/${subgroupId}/attendees/${attendeeId}`)
       .map(res => res.json())
       .subscribe(
         data => {

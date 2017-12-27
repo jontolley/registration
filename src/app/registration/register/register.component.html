@@ -37,23 +37,19 @@
               </div>
             </div>
           </li>
-          <li>Add Attendee <button class="btn btn-sm btn-primary">Add</button></li>
+          <li>Add Attendee <button class="btn btn-sm btn-primary" (click)="addAttendee()">Add</button></li>
         </ul>
       </div>
     </div>
     
     <div class="col-xs-12 col-md-6 select-list">
-      <div *ngIf="loadingAttendee">
-        Loading...
-      </div>
+      <camp-loading [busy]="loadingAttendee"></camp-loading>
       <div *ngIf="!loadingAttendee">
         <div *ngIf="!selectedAttendee">
           <h2>No Attendees</h2>
         </div>
         <div *ngIf="selectedAttendee">
-          <camp-attendee-form [groupId]="selectedSubgroup.groupId" [subgroupId]="selectedSubgroup.id" [attendee]="selectedAttendee"></camp-attendee-form>
-          <!-- <h2>{{selectedAttendee.firstName}} {{selectedAttendee.lastName}}</h2>
-          <pre>{{selectedAttendee | json}}</pre> -->
+          <camp-attendee-form [groupId]="selectedSubgroup.groupId" [subgroupId]="selectedSubgroup.id" [attendees]="attendees" [attendee]="selectedAttendee"></camp-attendee-form>
         </div>
       </div>
     </div>

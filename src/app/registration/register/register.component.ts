@@ -85,10 +85,10 @@ export class RegisterComponent implements OnInit {
     this.selectedAttendee = attendee;
 
     this.loadingAttendee = true;
-    this.register.getAttendee(
-      this.selectedSubgroup.groupId, this.selectedSubgroup.id, attendee.id)
+    this.register.getAttendee(this.selectedSubgroup.groupId, this.selectedSubgroup.id, attendee.id)
       .subscribe(
         data => {
+          this.replaceAttendee(attendee, data);
           this.selectedAttendee = data;
           this.loadingAttendee = false;
         },
@@ -97,6 +97,33 @@ export class RegisterComponent implements OnInit {
           this.loadingAttendee = false;
         }
       );
+  }
+
+  addAttendee() {
+    this.loadingAttendee = true;
+    let attendee = new Attendee();
+    attendee.subgroupId = this.selectedSubgroup.id;
+    attendee.attendance = {
+      monday: true,
+      tuesday: true,
+      wednesday: true,
+      thursday: true,
+      friday: true,
+      saturday: true,
+      daysAttending: 6
+    }
+    this.selectedAttendee = attendee;
+
+    setTimeout(()=>{
+      this.loadingAttendee = false;
+    },50);
+  }
+
+  replaceAttendee(oldAttendee:Attendee, newAttendee:Attendee) {
+    var index = this.attendees.indexOf(oldAttendee);          
+    if (index !== -1) {
+      this.attendees[index] = newAttendee;
+    }
   }
 
 }

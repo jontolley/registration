@@ -1,23 +1,46 @@
-<!-- <camp-error-header [message]="errorMessage"></camp-error-header> -->
+<camp-loading [busy]="busy"></camp-loading>
 
-<div class="container">
+<div class="container" *ngIf="!busy">
   <div class="attendeeForm">
     <div class="my-4 header">Complete this form to register an attendee.</div>
     <form (ngSubmit)="onSubmit()" #attendeeForm="ngForm">
+
       <div class="form-row">
         <div class="form-group col-md-6" [class.form-error]="firstName.invalid && (firstName.dirty || submitFailed)">
           <label for="inputFirstName">First Name</label>
           <label [class.error-message]="firstName.hasError('required')" class="required">required</label>
-          <input type="text" class="form-control" id="inputFirstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
+          <input type="text" class="form-control form-control-lg" id="inputFirstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
             required>
         </div>
         <div class="form-group col-md-6" [class.form-error]="lastName.invalid && (lastName.dirty || submitFailed)">
           <label for="inputLastName">Last Name</label>
           <label [class.error-message]="lastName.hasError('required')" class="required">required</label>
-          <input type="text" class="form-control" id="inputLastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
+          <input type="text" class="form-control form-control-lg" id="inputLastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
             required>
         </div>
       </div>
+      
+      <div class="form-row">
+        <p-selectButton name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult"></p-selectButton>
+      </div>
+      
+      <div class="form-row">
+        Triathlon <p-selectButton name="triathlon" [options]="triathlonChoices" [(ngModel)]="model.triathlon"></p-selectButton>
+      </div>
+      
+      <div class="form-row">
+        <label for="shirtSize">Shirt Size</label>
+        <p-dropdown name="shirtSize" [options]="shirtSizeChoices" [(ngModel)]="model.shirtSize" placeholder="Select a size"></p-dropdown>
+      </div>
+      
+      <!-- <div class="form-row">
+        <div class="form-group col-md-6" [class.form-error]="shirtSize.invalid && (shirtSize.dirty || submitFailed)">
+          <select class="form-control form-control-lg">
+            <option>Large select</option>
+          </select>
+        </div>
+      </div> -->
+
       <!-- <div class="form-row">
         <div class="form-group col-md-6"
           [class.form-error]="(email.hasError('required') && (email.dirty || submitFailed)) || (email.hasError('email') && submitFailed)">
@@ -55,7 +78,7 @@
       <div class="my-3">
         <button type="submit" class="btn btn-success" [hidden]="submiting">Save</button>
         <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
-        <button type="reset" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()">Reset</button>
+        <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()">Reset</button>
       </div>
     </form>
   </div>  

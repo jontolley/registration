@@ -6,6 +6,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 
 // MODULES
 import { SharedModule } from './shared/shared.module';
+import { SelectButtonModule, DropdownModule } from 'primeng/primeng';
 
 // ROUTING AND COMPONENTS
 import { RegistrationRoutingModule } from './registration-routing.module';
@@ -42,7 +43,9 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CommonModule,
     FormsModule,
     RegistrationRoutingModule,
-    SharedModule
+    SharedModule,
+    SelectButtonModule,
+    DropdownModule
   ],
   declarations: [
     AssignComponent,

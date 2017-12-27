@@ -1,7 +1,12 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { NgForm }   from '@angular/forms';
+
+import {SelectItem} from 'primeng/primeng';
+
 import { Attendee } from '../models/attendee';
 import { AttendeeService } from '../services/attendee.service';
+import { DataService } from '../services/data.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'camp-attendee-form',
@@ -13,9 +18,11 @@ export class AttendeeFormComponent implements OnInit {
   @ViewChild('attendeeForm') public attendeeForm: NgForm;
   @Input() groupId:number;
   @Input() subgroupId:number;
+  @Input() attendees:Attendee[];
   @Input() attendee:Attendee;
   
   errorMessage:string;
+  busy:boolean = true;
 
   submitted:boolean;
   submitFailed:boolean;
@@ -23,10 +30,34 @@ export class AttendeeFormComponent implements OnInit {
 
   model:Attendee;
 
-  constructor(private dataService: AttendeeService) { }
+  attendeeTypes: SelectItem[];
+  triathlonChoices: SelectItem[];
+  shirtSizeChoices: SelectItem[] = [];
+
+  constructor(private dataService: DataService, private attendeeService: AttendeeService) {
+    this.attendeeTypes = [];
+    this.attendeeTypes.push({label: 'Adult', value: true});
+    this.attendeeTypes.push({label: 'Youth', value: false});
+    
+    this.triathlonChoices = [];
+    this.triathlonChoices.push({label: 'Yes', value: true});
+    this.triathlonChoices.push({label: 'No', value: false});
+
+    this.model = new Attendee();
+  }
 
   ngOnInit() {
-    this.initializeVariables();
+    this.loadShirtSizes()
+    .subscribe(
+      data => {
+        this.initializeVariables();
+        this.busy = false;
+      },
+      error => {
+        this.errorMessage = error;
+        this.busy = false;
+      }
+    );
   }
 
   onSubmit() {
@@ -40,13 +71,14 @@ export class AttendeeFormComponent implements OnInit {
 
     if (this.model.id) {
       // Current Attendee so update
-      this.dataService.updateAttendee(this.groupId, this.subgroupId, this.model)
+      this.attendeeService.updateAttendee(this.groupId, this.subgroupId, this.model)
       .subscribe(
-        data => { },
+        data => {
+          this.attendee = Object.assign(this.attendee, this.model);
+        },
         error => {
           this.submiting = false;
           this.errorMessage = error;
-          console.log(error);
         },
         () => {
           console.log('Attendee updated');
@@ -56,15 +88,16 @@ export class AttendeeFormComponent implements OnInit {
       );
     } else {
       // New Attendee so add
-      this.dataService.addAttendee(this.groupId, this.subgroupId, this.model)
+      this.attendeeService.addAttendee(this.groupId, this.subgroupId, this.model)
       .subscribe(
         data => {
           this.model = data;
+          this.attendee = Object.assign(this.attendee, this.model);
+          this.attendees.push(this.attendee);
         },
         error => {
           this.submiting = false;
           this.errorMessage = error;
-          console.log(error);
         },
         () => {
           console.log('Attendee added');
@@ -75,16 +108,34 @@ export class AttendeeFormComponent implements OnInit {
     }
   }
 
+  loadShirtSizes(): Observable<any> {
+    return new Observable(observer => {
+      this.dataService.getShirtSizes()
+      .subscribe(
+        data => {
+          for (let size of data) {
+            this.shirtSizeChoices.push({label: size.size, value:size.size});
+          }
+          observer.next();
+          observer.complete();
+        },
+        error => {
+          observer.error(error);
+        }
+      );
+    });
+  }
+
   initializeVariables() {
     this.submitted = false;
     this.submitFailed = false;
     this.submiting = false;
-    this.model = this.attendee;
+
+    this.model = Object.assign({}, this.attendee);
   }
 
   reset() {
     this.errorMessage = undefined;
-    this.attendeeForm.reset();
     this.initializeVariables();
   }
 
