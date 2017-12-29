@@ -1,12 +1,11 @@
 <camp-error-header [message]="errorMessage"></camp-error-header>
 <camp-loading [busy]="busy"></camp-loading>
 
+<camp-page-header title="Register Attendees"></camp-page-header>
+
 <div class="container fixed-height" *ngIf="!busy">
   <div class="row">
-    <div class="col-12">
-        <h1>Register Attendees</h1>
-    </div>
-    <div class="col-12">
+    <div class="col-12 mt-3">
       <a [routerLink]="['assign']" class="btn btn-primary">Assign</a>
       <a [routerLink]="['profile']" class="btn btn-primary">Profile</a>
       <button type="button" class="btn btn-secondary" (click)="auth.logout()">Logout</button>

@@ -17,7 +17,6 @@ import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 
 import { AgmCoreModule } from '@agm/core';
@@ -44,7 +43,6 @@ import { SharedModule } from './registration/shared/shared.module';
     MapsComponent,
     FaqComponent,
     ContactComponent,
-    PageHeaderComponent,
     ScheduleDayComponent,
     ShrinkOnScrollDirective,
     ContactFormComponent,

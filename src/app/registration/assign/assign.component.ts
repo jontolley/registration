@@ -30,6 +30,9 @@ export class AssignComponent implements OnInit {
   selectedGroup:Group;
   selectedSubgroup:Subgroup;
   
+  growlMessages: any[] = [];
+  growlStickyMessages: any[] = [];
+
   constructor(private assign:AssignService, private register:RegisterService,
     private router: Router, public authService: AuthService, private usersService:UsersService) {
       this.groups = [];
@@ -43,46 +46,29 @@ export class AssignComponent implements OnInit {
     .subscribe(
       data => {
         this.assignments = data;
-
-        this.register.getGroups()
-        .subscribe(
-          data => {
-            this.groups = data;
-            this.selectedGroup = data[0] || undefined;
-            this.loadingGroups = false;
-            if (this.selectedGroup) {
-              this.groupSelected(this.selectedGroup);
-            }
-          },
-          error => {
-            console.error(error);
-            this.loadingGroups = false;
-            this.router.navigate(['error']);
-          }
-        );
+        this.loadGroups();
       },
       error => {
         if (error.code !== 404) {
           console.error(error);
           this.router.navigate(['error']);
         }
+        this.loadGroups();
+      }
+    );
+  }
 
-        this.register.getGroups()
-        .subscribe(
-          data => {
-            this.groups = data;
-            this.selectedGroup = data[0] || undefined;
-            this.loadingGroups = false;
-            if (this.selectedGroup) {
-              this.groupSelected(this.selectedGroup);
-            }
-          },
-          error => {
-            console.error(error);
-            this.loadingGroups = false;
-            this.router.navigate(['error']);
-          }
-        );
+  loadGroups() {
+    this.register.getGroups()
+    .subscribe(
+      data => {
+        this.groups = data;
+        this.loadingGroups = false;
+      },
+      error => {
+        console.error(error);
+        this.loadingGroups = false;
+        this.router.navigate(['error']);
       }
     );
   }
@@ -99,6 +85,7 @@ export class AssignComponent implements OnInit {
       error => {
         console.error(error);
         this.errorMessage = error;
+        this.router.navigate(['error']);
       },
       () => {
         this.loadingSubgroups = false;
@@ -136,13 +123,13 @@ export class AssignComponent implements OnInit {
     .subscribe(
       data => {
         this.assignments.subgroups.push(this.selectedSubgroup);
+        this.showGrowl('success', 'Unit successfuly added', `${this.selectedSubgroup.name}`);
         console.log('new assignment', data);
         this.selectedSubgroup = undefined;
       },
       error => {
         this.selectedSubgroup = undefined;
-        alert("Invalid Pin");
-        console.error('no assignment', error);
+        this.showGrowl('error', 'Invalid Pin', 'The pin was invalid.');
       }
     );
     console.log('assign Subgroup', pin, subgroup);
@@ -155,13 +142,27 @@ export class AssignComponent implements OnInit {
         let position = this.assignments.subgroups.findIndex((value, index, obj) => {
           return value.id === subgroupId;
         });
-        this.assignments.subgroups.splice(position, 1);
-        console.log('removed assignment', subgroupId);
+        if (position < 0) return;
+
+        let removedSubgroupArray = this.assignments.subgroups.splice(position, 1);
+        let removedSubgroup = removedSubgroupArray[0];
         this.selectedSubgroup = undefined;
+        this.showGrowl('info', 'Unit successfuly removed', `${removedSubgroup.name}`);
       },
       error => {
         console.error('no assignment', error);
+        this.router.navigate(['error']);
       }
     );
+  }
+  
+  showGrowl(severity:string, summary:string, detail?:string) {
+    this.growlMessages = [];
+    this.growlMessages.push({severity:severity, summary:summary, detail:detail});
+  }
+    
+  showStickyGrowl(severity:string, summary:string, detail?:string) {
+    this.growlStickyMessages = [];
+    this.growlStickyMessages.push({severity:severity, summary:summary, detail:detail});
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ErrorHeaderComponent } from './components/error-header/error-header.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -11,11 +12,13 @@ import { RouterModule } from '@angular/router';
   ],
   declarations: [
     LoadingComponent,
-    ErrorHeaderComponent
+    ErrorHeaderComponent,
+    PageHeaderComponent
   ],
   exports: [
     LoadingComponent,
-    ErrorHeaderComponent
+    ErrorHeaderComponent,
+    PageHeaderComponent
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,10 @@
 <camp-loading [busy]="busy"></camp-loading>
+<p-growl [(value)]="growlMessages"></p-growl>
+<p-growl [(value)]="growlStickyMessages" sticky="true"></p-growl>
 
-<div class="container fixed-height" *ngIf="!busy">
+<camp-page-header title="Ward Assignment"></camp-page-header>
+
+<div class="container fixed-height" *ngIf="!busy">  
   <div class="row">
     <div class="col-12 pt-4" *ngIf="errorMessage">
       <div class="alert alert-success" role="alert">
@@ -10,49 +14,78 @@
       </div>
     </div>
 
-    <h1 class="col-12">Ward Assignment</h1>
-    <h3 class="col-12">Select and enter the pin for the ward you will be registering.</h3>
-    <div class="col-12" *ngIf="assignments.subgroups.length>0">
-      <a class="btn btn-secondary" [routerLink]="['/register']">Register Attendees</a>
-    </div>
-    <div class="col-xs-12 col-md-3 select-list">
-      <h2>Stakes</h2>
-      <div *ngIf="loadingGroups">
-        Loading...
-      </div>
-      <div *ngIf="!loadingGroups">
-        <ul *ngIf="groups?.length>0">
-          <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id" [class.assigned]="isGroupAssigned(group)" class="selectable-list-item" (click)="groupSelected(group)">{{group.name}}</li>
-        </ul>
-        <div *ngIf="groups?.length===0">
-          No Stakes Found
+    <div class="col-12 mt-3" *ngIf="assignments.subgroups.length>0">
+    <div class="card">
+        <div class="card-header">
+          Ward Assigned
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">You now have a registration assignment.</h5>
+          <p class="card-text">You can now register attendees for your assigned Wards.</p>
+          <a class="btn btn-primary mt-3" [routerLink]="['/register']">Register Attendees</a>
         </div>
       </div>
     </div>
-    <div class="col-xs-12 col-md-6 select-list">
-      <h2>Wards</h2>
-      <div *ngIf="loadingSubgroups">
-        Loading...
-      </div>
-      <div *ngIf="!loadingSubgroups">
-        <ul *ngIf="subgroups?.length>0">
-          <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isSubgroupAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
-            <div class="row justify-content-between form-inline">
-              <div class="col-md-auto">
-                {{subgroup.name}}
-              </div>
-              <button *ngIf="isSubgroupAssigned(subgroup)" class="btn btn-outline-secondary btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
-              <div *ngIf="!isSubgroupAssigned(subgroup) && (selectedSubgroup?.id === subgroup.id)" class="col-md-auto input-group">
-                <input type="text" class="form-control" placeholder="Pin" #pinInput>
-                <span class="input-group-btn">
-                  <button class="btn btn-secondary btn-sm" type="button" (click)="addSubgroup(subgroup, pinInput.value)">Add</button>
-                </span>
-              </div>
+
+    <div class="col-12 mt-3 sub-header">Select the Stake and Ward you will be registering and enter the correct pin number.</div>
+
+    <div class="col-xs-12 col-md-4 mt-3">
+      <div class="select-list">
+        <div class="select-list-header">Stakes</div>
+        <div class="select-list-body">
+          <div *ngIf="loadingGroups">
+            <ul>
+              <li>Loading...</li>
+            </ul>
+          </div>
+          <div *ngIf="!loadingGroups">
+            <ul *ngIf="groups?.length>0">
+              <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id" [class.assigned]="isGroupAssigned(group)" class="selectable-list-item" (click)="groupSelected(group)">{{group.name}}</li>
+            </ul>
+            <div *ngIf="groups?.length===0">
+              <ul>
+                <li>No Stakes Found</li>
+              </ul>
             </div>
-          </li>
-        </ul>      
-        <div *ngIf="subgroups?.length===0">
-          No Wards Found
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-5 mt-3" *ngIf="selectedGroup">
+      <div class="select-list">
+        <div class="select-list-header">Wards - {{selectedGroup.name}}</div>
+        <div class="select-list-body">
+          <div *ngIf="loadingSubgroups">
+            <ul>
+              <li>Loading...</li>
+            </ul>
+          </div>
+          <div *ngIf="!loadingSubgroups">
+            <ul *ngIf="subgroups?.length>0">
+              <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isSubgroupAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
+                <div class="row justify-content-between form-inline">
+                  <div class="col-md-auto">
+                    {{subgroup.name}}
+                  </div>
+                  <div *ngIf="isSubgroupAssigned(subgroup)" class="col-md-auto">
+                    <button class="btn btn-danger btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
+                  </div>
+                  <div *ngIf="!isSubgroupAssigned(subgroup) && (selectedSubgroup?.id === subgroup.id)" class="col-md-auto input-group">
+                    <input type="text" class="form-control" placeholder="Pin" #pinInput>
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary btn-sm" type="button" (click)="addSubgroup(subgroup, pinInput.value)">Add</button>
+                    </span>
+                  </div>
+                </div>
+              </li>
+            </ul>      
+            <div *ngIf="subgroups?.length===0">
+              <ul>
+                <li>No Wards Found</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
