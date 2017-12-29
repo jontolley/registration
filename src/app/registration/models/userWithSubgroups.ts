@@ -7,5 +7,7 @@ export class UserWithSubgroups {
     public numberOfSubgroups:number;
     public subgroups:Subgroup[];
 
-    constructor() {  }
+    constructor() {
+        this.subgroups = [];
+    }
 }

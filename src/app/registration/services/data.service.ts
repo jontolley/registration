@@ -28,4 +28,40 @@ export class DataService {
       );
     });
   }
+
+  public getAccommodations(): Observable<any[]> {
+    return new Observable(observer => {
+      this.authHttp.get(`${this.API_URL}/support/accommodations`)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          observer.next(data);
+        },
+        error => {
+          observer.error(this.errorsService.handleError(error));
+        },
+        () => {
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  public getMeritbadges(): Observable<any[]> {
+    return new Observable(observer => {
+      this.authHttp.get(`${this.API_URL}/support/meritbadges`)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          observer.next(data);
+        },
+        error => {
+          observer.error(this.errorsService.handleError(error));
+        },
+        () => {
+          observer.complete();
+        }
+      );
+    });
+  }
 }

@@ -12,9 +12,8 @@
 
     <h1 class="col-12">Ward Assignment</h1>
     <h3 class="col-12">Select and enter the pin for the ward you will be registering.</h3>
-    <div class="col-12">
-      <button (click)="authService.logout()" class="btn btn-outline-primary my-3">Logout</button>
-      <a class="btn btn-secondary" [routerLink]="['/register']">Register</a>
+    <div class="col-12" *ngIf="assignments.subgroups.length>0">
+      <a class="btn btn-secondary" [routerLink]="['/register']">Register Attendees</a>
     </div>
     <div class="col-xs-12 col-md-3 select-list">
       <h2>Stakes</h2>

@@ -75,7 +75,8 @@ export class RegisterComponent implements OnInit {
           this.loadingAttendees = false;
         },
         error => {
-          this.errorMessage = error;
+          if (error.code === 0) this.errorMessage = error.message;
+          else this.errorMessage = error;
           this.loadingAttendees = false;
         }
       );
@@ -93,7 +94,8 @@ export class RegisterComponent implements OnInit {
           this.loadingAttendee = false;
         },
         error => {
-          this.errorMessage = error;
+          if (error.code === 0) this.errorMessage = error.message;
+          else this.errorMessage = error;
           this.loadingAttendee = false;
         }
       );

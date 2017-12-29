@@ -14,7 +14,12 @@ export class ErrorsService {
       campError.message = error.statusText;
     } else {
       campError.code = 0;
-      campError.message = error;
+
+      if (error.message === "No JWT present or has expired") {
+        campError.message = "Your session has expired.";
+      } else {
+        campError.message = error;
+      }
     }
 
     console.error(campError.code, campError.message);

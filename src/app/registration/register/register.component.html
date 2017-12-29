@@ -1,3 +1,4 @@
+<camp-error-header [message]="errorMessage"></camp-error-header>
 <camp-loading [busy]="busy"></camp-loading>
 
 <div class="container fixed-height" *ngIf="!busy">
@@ -33,7 +34,7 @@
           <li *ngFor="let attendee of attendees" [class.selected]="selectedAttendee?.id === attendee.id" class="selectable-list-item" (click)="attendeeSelected(attendee)">
             <div class="row">
               <div class="col-md-auto">
-                {{attendee.firstName}}
+                {{attendee.firstName}} {{attendee.lastName}}
               </div>
             </div>
           </li>

@@ -34,36 +34,55 @@ export class AssignComponent implements OnInit {
     private router: Router, public authService: AuthService, private usersService:UsersService) {
       this.groups = [];
       this.subgroups = [];
+      this.assignments = new UserWithSubgroups();
     }
 
   ngOnInit() {
-    this.register.getGroups()
-    .subscribe(
-      data => {
-        this.groups = data;
-        this.selectedGroup = data[0] || undefined;
-        this.loadingGroups = false;
-        if (this.selectedGroup) {
-          this.groupSelected(this.selectedGroup);
-        }
-      },
-      error => {
-        console.error(error);
-        this.loadingGroups = false;
-        this.router.navigate(['error']);
-      }
-    );
 
     this.assign.getAssignments()
     .subscribe(
       data => {
         this.assignments = data;
+
+        this.register.getGroups()
+        .subscribe(
+          data => {
+            this.groups = data;
+            this.selectedGroup = data[0] || undefined;
+            this.loadingGroups = false;
+            if (this.selectedGroup) {
+              this.groupSelected(this.selectedGroup);
+            }
+          },
+          error => {
+            console.error(error);
+            this.loadingGroups = false;
+            this.router.navigate(['error']);
+          }
+        );
       },
       error => {
         if (error.code !== 404) {
           console.error(error);
           this.router.navigate(['error']);
         }
+
+        this.register.getGroups()
+        .subscribe(
+          data => {
+            this.groups = data;
+            this.selectedGroup = data[0] || undefined;
+            this.loadingGroups = false;
+            if (this.selectedGroup) {
+              this.groupSelected(this.selectedGroup);
+            }
+          },
+          error => {
+            console.error(error);
+            this.loadingGroups = false;
+            this.router.navigate(['error']);
+          }
+        );
       }
     );
   }
@@ -92,8 +111,7 @@ export class AssignComponent implements OnInit {
   }
   
   isGroupAssigned(group:Group): boolean {
-    let assigned = false;    
-    let x = this.assignments.subgroups;
+    let assigned = false;
     this.assignments.subgroups.forEach(element => {
       if (group.id === element.groupId) assigned = true;
     });
@@ -131,19 +149,19 @@ export class AssignComponent implements OnInit {
   }
 
   removeSubgroup(subgroupId:number): void {
-        this.assign.removeAssignment(subgroupId)
-        .subscribe(
-          data => {
-            let position = this.assignments.subgroups.findIndex((value, index, obj) => {
-              return value.id === subgroupId;
-            });
-            this.assignments.subgroups.splice(position, 1);
-            console.log('removed assignment', subgroupId);
-            this.selectedSubgroup = undefined;
-          },
-          error => {
-            console.error('no assignment', error);
-          }
-        );
+    this.assign.removeAssignment(subgroupId)
+    .subscribe(
+      data => {
+        let position = this.assignments.subgroups.findIndex((value, index, obj) => {
+          return value.id === subgroupId;
+        });
+        this.assignments.subgroups.splice(position, 1);
+        console.log('removed assignment', subgroupId);
+        this.selectedSubgroup = undefined;
+      },
+      error => {
+        console.error('no assignment', error);
       }
+    );
+  }
 }

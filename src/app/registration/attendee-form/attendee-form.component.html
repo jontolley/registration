@@ -33,53 +33,41 @@
         <p-dropdown name="shirtSize" [options]="shirtSizeChoices" [(ngModel)]="model.shirtSize" placeholder="Select a size"></p-dropdown>
       </div>
       
-      <!-- <div class="form-row">
-        <div class="form-group col-md-6" [class.form-error]="shirtSize.invalid && (shirtSize.dirty || submitFailed)">
-          <select class="form-control form-control-lg">
-            <option>Large select</option>
-          </select>
-        </div>
-      </div> -->
+      <div class="form-row">
+        <label for="dateOfBirth">Birthdate</label>
+        <p-dropdown name="inputDateOfBirthMonth" [options]="monthChoices" placeholder="Month" [(ngModel)]="dob.month" (onChange)="dateOfBirthChanged()"></p-dropdown>
+        <input type="text" style="width:35px" name="inputDateOfBirthDay" id="inputDateOfBirthDay" [(ngModel)]="dob.day" maxlength="2" placeholder="Day" (blur)="dateOfBirthChanged()">
+        <input type="text" style="width:60px" name="inputDateOfBirthYear" id="inputDateOfBirthYear" [(ngModel)]="dob.year" maxlength="4" placeholder="Year" (blur)="dateOfBirthChanged()">
+        <input type="hidden" name="dateOfBirth" id="inputDateOfBirth" [(ngModel)]="model.dateOfBirth">
+      </div>
 
-      <!-- <div class="form-row">
-        <div class="form-group col-md-6"
-          [class.form-error]="(email.hasError('required') && (email.dirty || submitFailed)) || (email.hasError('email') && submitFailed)">
-          <label for="inputEmail">Email</label>
-          <label [class.error-message]="email.hasError('required')" class="required">required</label>
-          <input type="email" class="form-control" id="inputEmail" [(ngModel)]="model.email" name="email" #email="ngModel" required email>
-          <div *ngIf="(email.hasError('email') && !email.hasError('required')) && submitFailed" [class.error-message]="email.hasError('email')">
-            <small class="text-uppercase">Please enter a valid email address</small></div>
-        </div>
+      <div class="form-row" *ngIf="dobError.day || dobError.year">
+        <span *ngIf="dobError.day">The day doesn't look right. Be sure to use a 2-digit number that is a day of the month.</span>
+        <span *ngIf="dobError.year">The year doesn't look right. Be sure to use four digits.</span>
       </div>
+      
       <div class="form-row">
-        <div class="form-group col-md-6" [class.form-error]="phoneNumber.invalid && (phoneNumber.dirty || submitFailed)">
-          <label for="inputPhoneNumber">Phone Number</label>
-          <input type="text" class="form-control" id="inputPhoneNumber" [textMask]="{mask: phoneMask}" [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
-        </div>
+        <p-selectButton name="attendance" [options]="days" [(ngModel)]="selectedDays" multiple="multiple"></p-selectButton>
       </div>
+
       <div class="form-row">
-        <div class="form-group col-md-6" [class.form-error]="stake.invalid && (stake.dirty || submitFailed)">
-          <label for="inputStake">Stake</label>
-          <input type="text" class="form-control" id="inputStake" [(ngModel)]="model.stake" name="stake" #stake="ngModel">
-        </div>
-        <div class="form-group col-md-6" [class.form-error]="ward.invalid && (ward.dirty || submitFailed)">
-          <label for="inputWard">Ward</label>
-          <input type="text" class="form-control" id="inputWard" [(ngModel)]="model.ward" name="ward" #ward="ngModel">
-        </div>
+        <p-multiSelect name="accomodations" [options]="accommodationChoices" [(ngModel)]="model.accommodations" dataKey="id" optionLabel="name"></p-multiSelect>
       </div>
+      
       <div class="form-row">
-        <div class="form-group col-md-12" [class.form-error]="message.invalid && (message.dirty || submitFailed)">
-          <label for="inputMessage">Message</label>
-          <label [class.error-message]="message.hasError('required')" class="required">required</label>
-          <textarea type="text" class="form-control" id="inputMessage" required [(ngModel)]="model.message" name="message" #message="ngModel"
-            rows="3" required></textarea>
-        </div>
-      </div> -->
+        <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" dataKey="id" optionLabel="name"></p-multiSelect>
+      </div>
+
       <div class="my-3">
         <button type="submit" class="btn btn-success" [hidden]="submiting">Save</button>
         <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
         <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()">Reset</button>
       </div>
+
+      <div *ngIf="model.insertedBy">added by <span>{{model.insertedBy}}</span></div>
+      <div *ngIf="model.insertedOn">added on <span>{{model.insertedOn | date:'fullDate' }}</span> at <span>{{model.insertedOn | date:'shortTime' }}</span></div>
+      <div *ngIf="model.updatedBy">updated by <span>{{model.updatedBy}}</span></div>
+      <div *ngIf="model.updatedOn">update on <span>{{model.updatedOn | date:'fullDate' }}</span> at <span>{{model.updatedOn | date:'shortTime' }}</span></div>
     </form>
   </div>  
 </div>
