@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
 
 import { AuthService } from '../services/auth.service';
 import { AssignService } from '../services/assign.service';
@@ -42,6 +41,7 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['register','assign']);
           return;
         }
+        
         this.subgroupSelected(this.assignments.subgroups[0]);
         this.busy = false;
       },

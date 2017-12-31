@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/forkJoin';
 
 import { AssignService } from '../services/assign.service';
 import { RegisterService } from '../services/register.service';
