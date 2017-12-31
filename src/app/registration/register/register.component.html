@@ -27,11 +27,9 @@
           </ul>
         </div>
       </div>
-    <!-- </div>
-
-    <div class="col-xs-12 col-md-3 mt-3"> -->
+      
       <div class="select-list">
-        <div class="select-list-header">Attendees</div>
+        <div class="select-list-header">Attendees <small *ngIf="!loadingAttendees">({{attendeeCount}})</small></div>
         <div class="select-list-body">
           <div *ngIf="loadingAttendees">
             <ul>
