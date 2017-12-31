@@ -9,6 +9,8 @@ import { AttendeeService } from '../services/attendee.service';
 import { DataService } from '../services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { forkJoin } from 'rxjs/observable/forkJoin';
+import { Accommodation } from '../models/accommodation';
+import { MeritBadge } from '../models/meritBadge';
 
 @Component({
   selector: 'camp-attendee-form',
@@ -228,6 +230,34 @@ export class AttendeeFormComponent implements OnInit {
     if (this.model.attendance.thursday) this.selectedDays.push('thursday');
     if (this.model.attendance.friday) this.selectedDays.push('friday');
     if (this.model.attendance.saturday) this.selectedDays.push('saturday');
+  }
+
+  removeAccommodation(accommodation:Accommodation) {
+    let position = this.model.accommodations.findIndex((value, index, obj) => {
+      return value.id === accommodation.id;
+    });
+    if (position > -1) {
+      this.model.accommodations.splice(position,1);
+      let temp:Accommodation[] = [];
+      this.model.accommodations.forEach(element => {
+        temp.push(element);
+      });
+      this.model.accommodations = temp;
+    }
+  }
+
+  removeMeritBadge(meritBadge:MeritBadge) {
+    let position = this.model.meritBadges.findIndex((value, index, obj) => {
+      return value.id === meritBadge.id;
+    });
+    if (position > -1) {
+      this.model.meritBadges.splice(position,1);
+      let temp:MeritBadge[] = [];
+      this.model.meritBadges.forEach(element => {
+        temp.push(element);
+      });
+      this.model.meritBadges = temp;
+    }
   }
 
   setFormPristine() {

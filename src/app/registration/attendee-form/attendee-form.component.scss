@@ -26,6 +26,15 @@
   }
 }
 
+.multiselect-pills {
+  margin-bottom: 5px;
+
+  .multiselect-pill {
+    margin-right: 10px;
+    border-radius: 15px;
+  }
+}
+
 form {
   label {
     margin-bottom: 0.15rem;

@@ -75,20 +75,36 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-6 small-bottom-margin">
+        <div class="form-group col-md-12 small-bottom-margin">
           <div class="form-solo-label">
-            <label for="accomodations">Accomodations</label>
+            <label for="accommodations">Accommodations</label>
           </div>
-          <p-multiSelect name="accomodations" [options]="accommodationChoices" [(ngModel)]="model.accommodations" #accommodations="ngModel" dataKey="id" optionLabel="name"></p-multiSelect>
+          <div class="multiselect-pills" *ngIf="model.accommodations && model.accommodations.length>0">
+            <button *ngFor="let item of model.accommodations" type="button" class="btn btn-outline-success btn-sm multiselect-pill"
+              (click)="removeAccommodation(item)">
+              <i class="fa fa-times"></i> {{item.name}}</button>
+          </div>
+        </div>
+        <div class="form-group col-md-6 small-bottom-margin">
+          <p-multiSelect name="accommodations" [options]="accommodationChoices" [(ngModel)]="model.accommodations" #accommodations="ngModel"
+            dataKey="id" optionLabel="name" [maxSelectedLabels]="0" defaultLabel="Select Accommodations"></p-multiSelect>
         </div>
       </div>
-      
+
       <div class="form-row" *ngIf="model.isAdult===false">
-        <div class="form-group col-md-6 small-bottom-margin">
+        <div class="form-group col-md-12 small-bottom-margin">
           <div class="form-solo-label">
             <label for="meritBadges">Merit Badges</label>
           </div>
-          <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" #meritBadges="ngModel" dataKey="id" optionLabel="name"></p-multiSelect>
+          <div class="multiselect-pills" *ngIf="model.meritBadges && model.meritBadges.length>0">
+            <button *ngFor="let item of model.meritBadges" type="button" class="btn btn-outline-success btn-sm multiselect-pill"
+              (click)="removeMeritBadge(item)">
+              <i class="fa fa-times"></i> {{item.name}}</button>
+          </div>
+        </div>
+        <div class="form-group col-md-6 small-bottom-margin">
+          <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" #meritBadges="ngModel"
+            dataKey="id" optionLabel="name" [maxSelectedLabels]="0" defaultLabel="Select Merit Badges"></p-multiSelect>
         </div>
       </div>
 
