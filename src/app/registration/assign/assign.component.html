@@ -40,13 +40,14 @@
           </div>
           <div *ngIf="!loadingGroups">
             <ul *ngIf="groups?.length>0">
-              <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id" [class.assigned]="isGroupAssigned(group)" class="selectable-list-item" (click)="groupSelected(group)">{{group.name}}</li>
+              <li *ngFor="let group of groups" [class.selected]="selectedGroup?.id === group.id"
+                [class.assigned]="isGroupAssigned(group)" class="selectable-list-item" (click)="groupSelected(group)">
+                <i class="fa fa-square-o unselected-icon" aria-hidden="true"></i>
+                <i class="fa fa-check-square-o selected-icon" aria-hidden="true"></i> {{group.name}}</li>
             </ul>
-            <div *ngIf="groups?.length===0">
-              <ul>
-                <li>No Stakes Found</li>
-              </ul>
-            </div>
+            <ul *ngIf="groups?.length===0">
+              <li>No Stakes Found</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -63,9 +64,12 @@
           </div>
           <div *ngIf="!loadingSubgroups">
             <ul *ngIf="subgroups?.length>0">
-              <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" [class.assigned]="isSubgroupAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
+              <li *ngFor="let subgroup of subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id"
+                [class.assigned]="isSubgroupAssigned(subgroup)" class="selectable-list-item" (click)="subgroupSelected(subgroup)">
                 <div class="row justify-content-between form-inline">
                   <div class="col-md-auto">
+                    <i class="fa fa-square-o unselected-icon" aria-hidden="true"></i>
+                    <i class="fa fa-check-square-o selected-icon" aria-hidden="true"></i>
                     {{subgroup.name}}
                   </div>
                   <div *ngIf="isSubgroupAssigned(subgroup)" class="col-md-auto">
@@ -80,11 +84,9 @@
                 </div>
               </li>
             </ul>      
-            <div *ngIf="subgroups?.length===0">
-              <ul>
-                <li>No Wards Found</li>
-              </ul>
-            </div>
+            <ul *ngIf="subgroups?.length===0">
+              <li>No Wards Found</li>
+            </ul>
           </div>
         </div>
       </div>

@@ -5,52 +5,57 @@
 
 <div class="container fixed-height" *ngIf="!busy">
   <div class="row">
+
     <div class="col-12 mt-3">
-      <a [routerLink]="['assign']" class="btn btn-primary">Assign</a>
-      <a [routerLink]="['profile']" class="btn btn-primary">Profile</a>
-      <button type="button" class="btn btn-secondary" (click)="auth.logout()">Logout</button>
+      <a [routerLink]="['assign']" class="btn btn-outline-success">Add Wards</a>
     </div>
     
-    <div class="col-xs-12 col-md-3 select-list">
-      <h2>Wards</h2>
-      <div>
-        <ul *ngIf="assignments.subgroups?.length>0">
-          <li *ngFor="let subgroup of assignments.subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id" class="selectable-list-item" (click)="subgroupSelected(subgroup)">{{subgroup.name}}</li>
-        </ul>
-        <div *ngIf="assignments.subgroups?.length===0">
-          No Wards Found
+    <div class="col-xs-12 col-md-3 mt-3">
+      <div class="select-list mb-3" *ngIf="assignments.subgroups?.length>1">
+        <div class="select-list-header">Wards</div>
+        <div class="select-list-body">
+          <div *ngIf="busy">
+            <ul>
+              <li>Loading...</li>
+            </ul>
+          </div>
+          <ul *ngIf="assignments.subgroups?.length>0">
+            <li *ngFor="let subgroup of assignments.subgroups" [class.selected]="selectedSubgroup?.id === subgroup.id && assignments.subgroups.length>1" class="selectable-list-item" (click)="subgroupSelected(subgroup)">{{subgroup.name}}</li>
+          </ul>
+          <ul *ngIf="assignments.subgroups?.length===0">
+            <li>No Wards Found</li>
+          </ul>
+        </div>
+      </div>
+    <!-- </div>
+
+    <div class="col-xs-12 col-md-3 mt-3"> -->
+      <div class="select-list">
+        <div class="select-list-header">Attendees</div>
+        <div class="select-list-body">
+          <div *ngIf="loadingAttendees">
+            <ul>
+              <li>Loading...</li>
+            </ul>
+          </div>
+          <ul *ngIf="!loadingAttendees">
+            <li *ngFor="let attendee of attendees" [class.selected]="selectedAttendee?.id === attendee.id" class="selectable-list-item" (click)="attendeeSelected(attendee)">
+              <div class="row">
+                <div class="col-md-auto">
+                  {{attendee.firstName}} {{attendee.lastName}}
+                </div>
+              </div>
+            </li>
+            <li><button class="btn btn-primary" (click)="addAttendee()"><i class="fa fa-plus"></i> Add Attendee</button></li>
+          </ul>
         </div>
       </div>
     </div>
-
-    <div class="col-xs-12 col-md-3 select-list">
-      <h2>Attendees</h2>
-      <div *ngIf="loadingAttendees">
-        Loading...
-      </div>
-      <div *ngIf="!loadingAttendees">
-        <ul>
-          <li *ngFor="let attendee of attendees" [class.selected]="selectedAttendee?.id === attendee.id" class="selectable-list-item" (click)="attendeeSelected(attendee)">
-            <div class="row">
-              <div class="col-md-auto">
-                {{attendee.firstName}} {{attendee.lastName}}
-              </div>
-            </div>
-          </li>
-          <li>Add Attendee <button class="btn btn-sm btn-primary" (click)="addAttendee()">Add</button></li>
-        </ul>
-      </div>
-    </div>
     
-    <div class="col-xs-12 col-md-6 select-list">
+    <div class="col-xs-12 col-md-9 mt-3" *ngIf="selectedAttendee">
       <camp-loading [busy]="loadingAttendee"></camp-loading>
       <div *ngIf="!loadingAttendee">
-        <div *ngIf="!selectedAttendee">
-          <h2>No Attendees</h2>
-        </div>
-        <div *ngIf="selectedAttendee">
           <camp-attendee-form [groupId]="selectedSubgroup.groupId" [subgroupId]="selectedSubgroup.id" [attendees]="attendees" [attendee]="selectedAttendee"></camp-attendee-form>
-        </div>
       </div>
     </div>
     

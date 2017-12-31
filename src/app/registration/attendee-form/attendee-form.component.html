@@ -2,72 +2,110 @@
 
 <div class="container" *ngIf="!busy">
   <div class="attendeeForm">
-    <div class="my-4 header">Complete this form to register an attendee.</div>
-    <form (ngSubmit)="onSubmit()" #attendeeForm="ngForm">
+    <form (ngSubmit)="onSubmit()" #attendeeForm="ngForm" autocomplete="off">
 
       <div class="form-row">
         <div class="form-group col-md-6" [class.form-error]="firstName.invalid && (firstName.dirty || submitFailed)">
           <label for="inputFirstName">First Name</label>
           <label [class.error-message]="firstName.hasError('required')" class="required">required</label>
           <input type="text" class="form-control form-control-lg" id="inputFirstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
-            required>
+            autocomplete="off" required>
         </div>
         <div class="form-group col-md-6" [class.form-error]="lastName.invalid && (lastName.dirty || submitFailed)">
           <label for="inputLastName">Last Name</label>
           <label [class.error-message]="lastName.hasError('required')" class="required">required</label>
           <input type="text" class="form-control form-control-lg" id="inputLastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
-            required>
+            autocomplete="off" required>
         </div>
       </div>
       
       <div class="form-row">
-        <p-selectButton name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult"></p-selectButton>
+        <div class="form-group col-md-auto" [class.form-error]="isAdult.invalid && (isAdult.dirty || submitFailed)">
+          <div class="form-solo-label">
+            <label for="isAdult">Attendee Type</label>
+            <label [class.error-message]="isAdult.hasError('required')" class="required">required</label>
+          </div>
+          <p-selectButton id="isAdult" name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult" #isAdult="ngModel" required></p-selectButton>
+        </div>
+
+        <div class="form-group col-md-auto" [class.form-error]="dateOfBirth.invalid && (dateOfBirth.dirty || submitFailed)" *ngIf="model.isAdult===false">
+          <div class="form-solo-label">
+            <label for="dateOfBirth">Birthdate</label>
+            <label *ngIf="model.isAdult===false" [class.error-message]="dateOfBirth.hasError('required')" class="required">required</label>
+          </div>
+          <p-dropdown name="inputDateOfBirthMonth" [options]="monthChoices" placeholder="Month" [(ngModel)]="dob.month" (onChange)="dateOfBirthChanged()"></p-dropdown>
+          <input type="text" style="width:55px" name="inputDateOfBirthDay" id="inputDateOfBirthDay" class="form-control birthdate-field" [(ngModel)]="dob.day" maxlength="2" placeholder="Day" (blur)="dateOfBirthChanged()">
+          <input type="text" style="width:65px" name="inputDateOfBirthYear" id="inputDateOfBirthYear" class="form-control birthdate-field" [(ngModel)]="dob.year" maxlength="4" placeholder="Year" (blur)="dateOfBirthChanged()">
+          <input type="hidden" name="dateOfBirth" id="inputDateOfBirth" [(ngModel)]="model.dateOfBirth" [required]="model.isAdult===false" #dateOfBirth="ngModel">
+          <div class="input-error-message">
+            <small *ngIf="dobError.day">The day doesn't look right. Be sure to use a 2-digit number that is a day of the month.</small>
+            <small *ngIf="dobError.year">The year doesn't look right. Be sure to use four digits.</small>
+          </div>
+        </div>
       </div>
       
       <div class="form-row">
-        Triathlon <p-selectButton name="triathlon" [options]="triathlonChoices" [(ngModel)]="model.triathlon"></p-selectButton>
+        <div class="form-group col-md-auto" [class.form-error]="shirtSize.invalid && (shirtSize.dirty || submitFailed)">
+          <div class="form-solo-label">
+            <label for="shirtSize">Shirt Size</label>
+            <label [class.error-message]="shirtSize.hasError('required')" class="required">required</label>
+          </div>
+          <p-dropdown name="shirtSize" [options]="shirtSizeChoices" [(ngModel)]="model.shirtSize" #shirtSize="ngModel" [style]="{'width':'200px'}" placeholder="Select a size" required></p-dropdown>
+        </div>
       </div>
       
       <div class="form-row">
-        <label for="shirtSize">Shirt Size</label>
-        <p-dropdown name="shirtSize" [options]="shirtSizeChoices" [(ngModel)]="model.shirtSize" placeholder="Select a size"></p-dropdown>
+        <div class="form-group col-md-auto" [class.form-error]="triathlon.invalid && (triathlon.dirty || submitFailed)">
+          <div class="form-solo-label">
+            <label for="triathlon">Triathlon</label>
+            <label [class.error-message]="triathlon.hasError('required')" class="required">required</label>
+          </div>
+          <p-selectButton id="triathlon" name="triathlon" [options]="triathlonChoices" [(ngModel)]="model.triathlon" #triathlon="ngModel" required></p-selectButton>
+        </div>
       </div>
       
       <div class="form-row">
-        <label for="dateOfBirth">Birthdate</label>
-        <p-dropdown name="inputDateOfBirthMonth" [options]="monthChoices" placeholder="Month" [(ngModel)]="dob.month" (onChange)="dateOfBirthChanged()"></p-dropdown>
-        <input type="text" style="width:35px" name="inputDateOfBirthDay" id="inputDateOfBirthDay" [(ngModel)]="dob.day" maxlength="2" placeholder="Day" (blur)="dateOfBirthChanged()">
-        <input type="text" style="width:60px" name="inputDateOfBirthYear" id="inputDateOfBirthYear" [(ngModel)]="dob.year" maxlength="4" placeholder="Year" (blur)="dateOfBirthChanged()">
-        <input type="hidden" name="dateOfBirth" id="inputDateOfBirth" [(ngModel)]="model.dateOfBirth">
+        <div class="form-group col-md-auto" [class.form-error]="attendance.invalid && (attendance.dirty || submitFailed)">
+          <div class="form-solo-label">
+            <label for="attendance">Attendance</label>
+            <label [class.error-message]="attendance.hasError('required')" class="required">required</label>
+          </div>
+          <p-selectButton name="attendance" [options]="days" [(ngModel)]="selectedDays" #attendance="ngModel" multiple="multiple" required></p-selectButton>
+        </div>
       </div>
 
-      <div class="form-row" *ngIf="dobError.day || dobError.year">
-        <span *ngIf="dobError.day">The day doesn't look right. Be sure to use a 2-digit number that is a day of the month.</span>
-        <span *ngIf="dobError.year">The year doesn't look right. Be sure to use four digits.</span>
+      <div class="form-row">
+        <div class="form-group col-md-6 small-bottom-margin">
+          <div class="form-solo-label">
+            <label for="accomodations">Accomodations</label>
+          </div>
+          <p-multiSelect name="accomodations" [options]="accommodationChoices" [(ngModel)]="model.accommodations" #accommodations="ngModel" dataKey="id" optionLabel="name"></p-multiSelect>
+        </div>
       </div>
       
-      <div class="form-row">
-        <p-selectButton name="attendance" [options]="days" [(ngModel)]="selectedDays" multiple="multiple"></p-selectButton>
-      </div>
-
-      <div class="form-row">
-        <p-multiSelect name="accomodations" [options]="accommodationChoices" [(ngModel)]="model.accommodations" dataKey="id" optionLabel="name"></p-multiSelect>
-      </div>
-      
-      <div class="form-row">
-        <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" dataKey="id" optionLabel="name"></p-multiSelect>
+      <div class="form-row" *ngIf="model.isAdult===false">
+        <div class="form-group col-md-6 small-bottom-margin">
+          <div class="form-solo-label">
+            <label for="meritBadges">Merit Badges</label>
+          </div>
+          <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" #meritBadges="ngModel" dataKey="id" optionLabel="name"></p-multiSelect>
+        </div>
       </div>
 
       <div class="my-3">
-        <button type="submit" class="btn btn-success" [hidden]="submiting">Save</button>
+        <button type="submit" class="btn btn-success" [hidden]="submiting"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
-        <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()">Reset</button>
+        <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
       </div>
 
-      <div *ngIf="model.insertedBy">added by <span>{{model.insertedBy}}</span></div>
-      <div *ngIf="model.insertedOn">added on <span>{{model.insertedOn | date:'fullDate' }}</span> at <span>{{model.insertedOn | date:'shortTime' }}</span></div>
-      <div *ngIf="model.updatedBy">updated by <span>{{model.updatedBy}}</span></div>
-      <div *ngIf="model.updatedOn">update on <span>{{model.updatedOn | date:'fullDate' }}</span> at <span>{{model.updatedOn | date:'shortTime' }}</span></div>
+      <div *ngIf="model.insertedBy" class="audit-info">
+        added by <span>{{model.insertedBy}}</span>
+        on <span>{{model.insertedOn | date:'fullDate' }}</span> at <span>{{model.insertedOn | date:'shortTime' }}</span>
+      </div>
+      <div *ngIf="model.updatedBy" class="audit-info">
+        updated by <span>{{model.updatedBy}}</span>
+        on <span>{{model.updatedOn | date:'fullDate' }}</span> at <span>{{model.updatedOn | date:'shortTime' }}</span>
+      </div>
     </form>
   </div>  
 </div>

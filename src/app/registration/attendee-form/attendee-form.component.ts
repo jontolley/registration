@@ -129,8 +129,7 @@ export class AttendeeFormComponent implements OnInit {
           this.errorMessage = error;
         },
         () => {
-          this.attendeeForm.form.markAsPristine();
-          this.attendeeForm.form.markAsUntouched();
+          this.setFormPristine();
           console.log('Attendee updated');
           this.submitted = true;
           this.submiting = false;
@@ -150,8 +149,7 @@ export class AttendeeFormComponent implements OnInit {
           this.errorMessage = error;
         },
         () => {
-          this.attendeeForm.form.markAsPristine();
-          this.attendeeForm.form.markAsUntouched();
+          this.setFormPristine();
           console.log('Attendee added');
           this.submitted = true;
           this.submiting = false;
@@ -218,6 +216,12 @@ export class AttendeeFormComponent implements OnInit {
       this.dob.day = moment(this.model.dateOfBirth).format('D');
     }
 
+    let insertedOn = moment.utc(this.model.insertedOn);
+    let updatedOn = moment.utc(this.model.updatedOn);
+
+    this.model.insertedOn = insertedOn.toDate();
+    this.model.updatedOn = updatedOn.toDate();
+
     if (this.model.attendance.monday) this.selectedDays.push('monday');
     if (this.model.attendance.tuesday) this.selectedDays.push('tuesday');
     if (this.model.attendance.wednesday) this.selectedDays.push('wednesday');
@@ -226,9 +230,15 @@ export class AttendeeFormComponent implements OnInit {
     if (this.model.attendance.saturday) this.selectedDays.push('saturday');
   }
 
+  setFormPristine() {
+    this.attendeeForm.form.markAsPristine();
+    this.attendeeForm.form.markAsUntouched();    
+  }
+
   reset() {
     this.errorMessage = undefined;
     this.initializeVariables();
+    this.setFormPristine();
   }
 
   private capitalizeFirstLetter(string) {

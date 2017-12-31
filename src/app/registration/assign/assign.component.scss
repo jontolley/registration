@@ -35,22 +35,40 @@
 
     .select-list-body {
 
-        // background-color: yellow;
+        .unselected-icon {
+            display: inline-block;
+        }
+
+        .selected-icon {
+            display: none;
+        }
 
         .selected {
-            background-color: rgba(0, 123, 255, 0.5);
+            background-color: rgb(40, 167, 69);
+            color: #f0f0f0;
             
             &:hover {
-                background-color: rgba(0, 123, 255, 0.8);
+                background-color: rgba(40, 167, 69, 0.8);
             }
         }
 
-        .assigned:not(.selected) {
-            background-color: rgba(0, 0, 0, 0.1);;
+        .assigned {
 
-            &:hover {
-                background-color: rgba(0, 0, 0, 0.4);
+            .unselected-icon {
+                display: none;
             }
+
+            .selected-icon {
+                display: inline-block;
+            }
+
+            &:not(.selected) {
+                background-color: rgba(0, 0, 0, 0.1);;
+                
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.4);
+                }
+            }            
         }
         
         ul {
