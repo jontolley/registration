@@ -26,8 +26,7 @@ export class RegisterComponent implements OnInit {
 
   assignments:UserWithSubgroups;
   selectedSubgroup:Subgroup;
-  attendees:Attendee[];
-  attendeeCount:number = 0;
+  attendees:Attendee[] = [];
   selectedAttendee:Attendee;
 
   constructor(private auth: AuthService, private router: Router,
@@ -70,7 +69,6 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.attendees = data;
-          this.attendeeCount = this.attendees.length || 0;
           if (this.attendees && this.attendees.length > 0) {
             this.attendeeSelected(this.attendees[0]);
           }

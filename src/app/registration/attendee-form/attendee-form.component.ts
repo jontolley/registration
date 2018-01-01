@@ -238,10 +238,7 @@ export class AttendeeFormComponent implements OnInit {
     });
     if (position > -1) {
       this.model.accommodations.splice(position,1);
-      let temp:Accommodation[] = [];
-      this.model.accommodations.forEach(element => {
-        temp.push(element);
-      });
+      let temp = Object.assign([], this.model.accommodations);
       this.model.accommodations = temp;
     }
   }
@@ -252,10 +249,7 @@ export class AttendeeFormComponent implements OnInit {
     });
     if (position > -1) {
       this.model.meritBadges.splice(position,1);
-      let temp:MeritBadge[] = [];
-      this.model.meritBadges.forEach(element => {
-        temp.push(element);
-      });
+      let temp = Object.assign([], this.model.meritBadges);
       this.model.meritBadges = temp;
     }
   }
