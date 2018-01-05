@@ -28,18 +28,18 @@
           <p-selectButton id="isAdult" name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult" #isAdult="ngModel" required></p-selectButton>
         </div>
 
-        <div class="form-group col-md-auto ml-md-5" [class.form-error]="dateOfBirth.invalid && (dateOfBirth.dirty || submitFailed)" *ngIf="model.isAdult===false">
+        <div class="form-group col-md-6 ml-md-5" [class.form-error]="dateOfBirth.invalid && (dateOfBirth.dirty || submitFailed)" *ngIf="model.isAdult===false">
           <div class="form-solo-label">
             <label for="dateOfBirth">Birthdate</label>
             <label *ngIf="model.isAdult===false" [class.error-message]="dateOfBirth.hasError('required')" class="required">required</label>
           </div>
           <p-dropdown name="inputDateOfBirthMonth" [options]="monthChoices" placeholder="Month" [(ngModel)]="dob.month" (onChange)="dateOfBirthChanged()"></p-dropdown>
-          <input type="text" style="width:55px" name="inputDateOfBirthDay" id="inputDateOfBirthDay" class="form-control birthdate-field" [(ngModel)]="dob.day" maxlength="2" placeholder="Day" (blur)="dateOfBirthChanged()">
-          <input type="text" style="width:65px" name="inputDateOfBirthYear" id="inputDateOfBirthYear" class="form-control birthdate-field" [(ngModel)]="dob.year" maxlength="4" placeholder="Year" (blur)="dateOfBirthChanged()">
+          <input type="text" style="width:55px;height:36px" name="inputDateOfBirthDay" id="inputDateOfBirthDay" class="form-control birthdate-field" [(ngModel)]="dob.day" maxlength="2" placeholder="Day" (blur)="dateOfBirthChanged()">
+          <input type="text" style="width:65px;height:36px" name="inputDateOfBirthYear" id="inputDateOfBirthYear" class="form-control birthdate-field" [(ngModel)]="dob.year" maxlength="4" placeholder="Year" (blur)="dateOfBirthChanged()">
           <input type="hidden" name="dateOfBirth" id="inputDateOfBirth" [(ngModel)]="model.dateOfBirth" [required]="model.isAdult===false" #dateOfBirth="ngModel">
           <div class="input-error-message">
             <small *ngIf="dobError.day">The day doesn't look right. Be sure to use a 2-digit number that is a day of the month.</small>
-            <small *ngIf="dobError.year">The year doesn't look right. Be sure to use four digits.</small>
+            <small *ngIf="dobError.year">The year doesn't look right. Be sure to use a 4-digit number that is a valid year.</small>
           </div>
         </div>
       </div>
