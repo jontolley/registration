@@ -1,7 +1,7 @@
 <camp-error-header [message]="errorMessage"></camp-error-header>
 <camp-loading [busy]="busy"></camp-loading>
 
-<camp-page-header title="Register Attendees"></camp-page-header>
+<camp-page-header title="Register Attendees" *ngIf="!busy"></camp-page-header>
 
 <div class="container fixed-height" *ngIf="!busy">
   <div class="row">
@@ -50,7 +50,7 @@
       </div>
     </div>
     
-    <div class="col-xs-12 col-md-9 mt-3" *ngIf="selectedAttendee">
+    <div class="col-xs-12 col-md-9 mt-3" *ngIf="selectedAttendeeInListOfAttendees()">
       <camp-loading [busy]="loadingAttendee"></camp-loading>
       <div *ngIf="!loadingAttendee">
           <camp-attendee-form [groupId]="selectedSubgroup.groupId" [subgroupId]="selectedSubgroup.id" [attendees]="attendees" [attendee]="selectedAttendee"></camp-attendee-form>

@@ -31,6 +31,7 @@ export class AttendeeFormComponent implements OnInit {
   submitted:boolean;
   submitFailed:boolean;
   submiting:boolean;
+  removing:boolean;
 
   model:Attendee;
   dob:any = {
@@ -224,12 +225,14 @@ export class AttendeeFormComponent implements OnInit {
     this.model.insertedOn = insertedOn.toDate();
     this.model.updatedOn = updatedOn.toDate();
 
-    if (this.model.attendance.monday) this.selectedDays.push('monday');
-    if (this.model.attendance.tuesday) this.selectedDays.push('tuesday');
-    if (this.model.attendance.wednesday) this.selectedDays.push('wednesday');
-    if (this.model.attendance.thursday) this.selectedDays.push('thursday');
-    if (this.model.attendance.friday) this.selectedDays.push('friday');
-    if (this.model.attendance.saturday) this.selectedDays.push('saturday');
+    if (this.model.attendance) {
+      if (this.model.attendance.monday) this.selectedDays.push('monday');
+      if (this.model.attendance.tuesday) this.selectedDays.push('tuesday');
+      if (this.model.attendance.wednesday) this.selectedDays.push('wednesday');
+      if (this.model.attendance.thursday) this.selectedDays.push('thursday');
+      if (this.model.attendance.friday) this.selectedDays.push('friday');
+      if (this.model.attendance.saturday) this.selectedDays.push('saturday');
+    }    
   }
 
   removeAccommodation(accommodation:Accommodation) {
@@ -252,6 +255,50 @@ export class AttendeeFormComponent implements OnInit {
       let temp = Object.assign([], this.model.meritBadges);
       this.model.meritBadges = temp;
     }
+  }
+
+  deleteAttendee() {
+    if (!this.model.id) return;
+    this.removing = true;
+
+    this.attendeeService.deleteAttendee(this.groupId, this.subgroupId, this.model)
+    .subscribe(
+      data => {
+        var index = this.attendees.indexOf(this.attendee);
+        if (index > -1) {
+          this.attendees.splice(index, 1);
+        }
+      },
+      error => {
+        this.errorMessage = error;
+        this.removing = false;
+      },
+      () => {
+        this.attendee = undefined;
+        this.reset();
+        console.log('Attendee deleted');
+        this.submitted = false;
+        this.removing = false;
+      }
+    )
+  }
+
+  triathlonEligible(): boolean {
+    let isEligible:boolean;
+
+    if (this.model.isAdult || (this.model.dateOfBirth && this.ageDurringEncampment(this.model.dateOfBirth)>13 )) {
+      isEligible = true;
+    } else {
+      isEligible = false;
+      this.model.triathlon = false;
+    }
+    return isEligible;
+  }
+
+  ageDurringEncampment(dateOfBirth:Date): number {
+    let encampmentLastDay = moment('2018-08-11');
+    let years = encampmentLastDay.diff(dateOfBirth, 'years', false);
+    return years;
   }
 
   setFormPristine() {

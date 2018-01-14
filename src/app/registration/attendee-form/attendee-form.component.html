@@ -54,7 +54,7 @@
         </div>
       </div>
       
-      <div class="form-row">
+      <div class="form-row" *ngIf="triathlonEligible()">
         <div class="form-group col-md-auto" [class.form-error]="triathlon.invalid && (triathlon.dirty || submitFailed)">
           <div class="form-solo-label">
             <label for="triathlon">Triathlon</label>
@@ -103,7 +103,7 @@
           </div>
         </div>
         <div class="form-group col-md-6 small-bottom-margin">
-          <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" #meritBadges="ngModel"
+          <p-multiSelect name="meritBadges" [options]="meritBadgeChoices" [(ngModel)]="model.meritBadges" #meritBadges="ngModel" [disabled]="model.meritBadges?.length>7"
             dataKey="id" optionLabel="name" [maxSelectedLabels]="0" defaultLabel="Select Merit Badges"></p-multiSelect>
         </div>
       </div>
@@ -111,7 +111,9 @@
       <div class="my-3">
         <button type="submit" class="btn btn-success" [hidden]="submiting"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
-        <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+        <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
+        <button type="button" class="btn btn-danger" [disabled]="!model.id" [hidden]="removing" (click)="deleteAttendee()"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+        <button type="button" class="btn btn-danger" [hidden]="!removing"><img class="saving-icon" src="assets\ripple.svg"> Removing...</button>
       </div>
 
       <div *ngIf="model.insertedBy" class="audit-info">

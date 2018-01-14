@@ -49,4 +49,22 @@ export class AttendeeService {
       );
     });
   }
+
+  public deleteAttendee(groupId:number, subgroupId:number, attendee:Attendee): Observable<boolean> {
+    return new Observable(observer => {
+      this.authHttp.delete(`${this.data.API_URL}/groups/${groupId}/subgroups/${subgroupId}/attendees/${attendee.id}`)
+      .map(res => res.json())
+      .subscribe(
+        data => {
+          observer.next(true);
+        },
+        error => {
+          observer.error(this.errorsService.handleError(error));
+        },
+        () => {
+          observer.complete();
+        }
+      );
+    });
+  }
 }

@@ -121,8 +121,15 @@ export class RegisterComponent implements OnInit {
     },50);
   }
 
+  selectedAttendeeInListOfAttendees(): boolean {
+    if (this.selectedAttendee && !this.selectedAttendee.id) return true;
+
+    var index = this.attendees.indexOf(this.selectedAttendee);
+    return index > -1;
+  }
+
   replaceAttendee(oldAttendee:Attendee, newAttendee:Attendee) {
-    var index = this.attendees.indexOf(oldAttendee);          
+    var index = this.attendees.indexOf(oldAttendee);
     if (index !== -1) {
       this.attendees[index] = newAttendee;
     }

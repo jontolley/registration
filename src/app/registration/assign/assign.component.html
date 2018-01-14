@@ -72,9 +72,6 @@
                     <i class="fa fa-check-square-o selected-icon" aria-hidden="true"></i>
                     {{subgroup.name}}
                   </div>
-                  <div *ngIf="isSubgroupAssigned(subgroup)" class="col-md-auto">
-                    <button class="btn btn-danger btn-sm" type="button" (click)="removeSubgroup(subgroup.id)">Remove</button>
-                  </div>
                   <div *ngIf="!isSubgroupAssigned(subgroup) && (selectedSubgroup?.id === subgroup.id)" class="col-md-auto input-group">
                     <input type="text" class="form-control" placeholder="Pin" #pinInput>
                     <span class="input-group-btn">
