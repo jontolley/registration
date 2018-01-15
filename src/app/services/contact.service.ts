@@ -7,8 +7,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class ContactService {
 
-  private API_URL = 'http://localhost:19671/api';
-  //private API_URL = 'https://encampment-api.azurewebsites.net/api';
+  //private API_URL = 'http://localhost:19671/api';
+  private API_URL = 'https://encampment-api.azurewebsites.net/api';
   
   constructor(private http: Http) { }
 
