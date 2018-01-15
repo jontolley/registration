@@ -1,14 +1,14 @@
 import { Component, ViewChild, OnInit, Input } from '@angular/core';
 import { NgForm }   from '@angular/forms';
 
-import {SelectItem} from 'primeng/primeng';
+import {SelectItem, ConfirmationService} from 'primeng/primeng';
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 
 import { Attendee } from '../models/attendee';
 import { AttendeeService } from '../services/attendee.service';
 import { DataService } from '../services/data.service';
-import { Observable } from 'rxjs/Observable';
-import { forkJoin } from 'rxjs/observable/forkJoin';
 import { Accommodation } from '../models/accommodation';
 import { MeritBadge } from '../models/meritBadge';
 
@@ -32,6 +32,8 @@ export class AttendeeFormComponent implements OnInit {
   submitFailed:boolean;
   submiting:boolean;
   removing:boolean;
+  
+  growlMessages: any[] = [];
 
   model:Attendee;
   dob:any = {
@@ -66,7 +68,7 @@ export class AttendeeFormComponent implements OnInit {
     { label: "December (12)", value: 12 }
   ];
 
-  constructor(private dataService: DataService, private attendeeService: AttendeeService) {
+  constructor(private dataService: DataService, private attendeeService: AttendeeService, private confirmationService: ConfirmationService) {
     this.attendeeTypes = [];
     this.attendeeTypes.push({label: 'Adult', value: true});
     this.attendeeTypes.push({label: 'Youth', value: false});
@@ -258,29 +260,39 @@ export class AttendeeFormComponent implements OnInit {
   }
 
   deleteAttendee() {
-    if (!this.model.id) return;
+    if (!this.model.id) return;    
     this.removing = true;
 
-    this.attendeeService.deleteAttendee(this.groupId, this.subgroupId, this.model)
+    this.confirmDelete()
     .subscribe(
-      data => {
-        var index = this.attendees.indexOf(this.attendee);
-        if (index > -1) {
-          this.attendees.splice(index, 1);
-        }
+      confirmed => {
+        this.attendeeService.deleteAttendee(this.groupId, this.subgroupId, this.model)
+        .subscribe(
+          data => {
+            var index = this.attendees.indexOf(this.attendee);
+            if (index > -1) {
+              this.attendees.splice(index, 1);
+            }
+          },
+          error => {
+            this.errorMessage = error;
+            this.removing = false;
+          },
+          () => {
+            this.attendee = undefined;
+            this.reset();
+            console.log('Attendee deleted');
+            this.growlMessages = [{severity:'success', summary:'Confirmed', detail:'Record deleted'}];
+            this.submitted = false;
+            this.removing = false;
+          }
+        );
       },
-      error => {
-        this.errorMessage = error;
+      rejected => {
         this.removing = false;
-      },
-      () => {
-        this.attendee = undefined;
-        this.reset();
-        console.log('Attendee deleted');
-        this.submitted = false;
-        this.removing = false;
+        // Do nothing.
       }
-    )
+    );
   }
 
   triathlonEligible(): boolean {
@@ -294,6 +306,23 @@ export class AttendeeFormComponent implements OnInit {
     }
     return isEligible;
   }
+
+  confirmDelete(): Observable<boolean> {
+    return new Observable(observer => {
+      this.confirmationService.confirm({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Confirmation',
+        icon: 'fa fa-trash',
+        accept: () => {
+          observer.next(true);
+          observer.complete();
+        },
+        reject: () => {
+          observer.error(false);
+        }
+      });
+    });
+}
 
   ageDurringEncampment(dateOfBirth:Date): number {
     let encampmentLastDay = moment('2018-08-11');

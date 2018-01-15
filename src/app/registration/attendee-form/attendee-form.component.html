@@ -1,4 +1,6 @@
 <camp-loading [busy]="busy"></camp-loading>
+<p-confirmDialog></p-confirmDialog>
+<p-growl [(value)]="growlMessages"></p-growl>
 
 <div class="container" *ngIf="!busy">
   <div class="attendeeForm">
@@ -112,7 +114,7 @@
         <button type="submit" class="btn btn-success" [hidden]="submiting"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
         <button type="button" class="btn btn-success" [hidden]="!submiting"><img class="saving-icon" src="assets\ripple.svg"> Saving...</button>
         <button type="button" class="btn btn-primary" [disabled]="attendeeForm.pristine" (click)="reset()"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
-        <button type="button" class="btn btn-danger" [disabled]="!model.id" [hidden]="removing" (click)="deleteAttendee()"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+        <button type="button" class="btn btn-danger" [disabled]="!model.id" [hidden]="removing" (click)="deleteAttendee()"><i class="fa fa-trash" aria-hidden="true"></i> Remove</button>
         <button type="button" class="btn btn-danger" [hidden]="!removing"><img class="saving-icon" src="assets\ripple.svg"> Removing...</button>
       </div>
 
