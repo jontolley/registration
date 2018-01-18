@@ -43,7 +43,6 @@ export class BtnGroupComponent implements ControlValueAccessor {
   isActive(option: BtnGroupOption) {
     if (this.options.multiselect) {
       let index = this.values.indexOf(option.value);
-      console.log('xyz',index);
       return index > -1;
     } else {
       return option.value === this.value;
@@ -60,10 +59,6 @@ export class BtnGroupComponent implements ControlValueAccessor {
     } else {
       this.value = value;
     }
-    console.log('here',this.value);
-    // if (value !== undefined) {
-    //   this.value = value;
-    // }
   }
   registerOnChange(fn: any): void {
     this.propagateChange = fn;
