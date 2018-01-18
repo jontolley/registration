@@ -11,6 +11,7 @@ import { AttendeeService } from '../services/attendee.service';
 import { DataService } from '../services/data.service';
 import { Accommodation } from '../models/accommodation';
 import { MeritBadge } from '../models/meritBadge';
+import { BtnGroupOptions } from '../shared/components/btn-group/btn-group-option';
 
 @Component({
   selector: 'camp-attendee-form',
@@ -46,10 +47,10 @@ export class AttendeeFormComponent implements OnInit {
     year: false
   }
 
-  attendeeTypes: SelectItem[];
-  days: SelectItem[];
+  attendeeTypes: BtnGroupOptions;
+  days: BtnGroupOptions;
   selectedDays: string[] = [];
-  triathlonChoices: SelectItem[];
+  triathlonChoices: BtnGroupOptions;
   shirtSizeChoices: SelectItem[] = [];
   accommodationChoices: any[] = [];
   meritBadgeChoices: any[] = [];
@@ -69,21 +70,21 @@ export class AttendeeFormComponent implements OnInit {
   ];
 
   constructor(private dataService: DataService, private attendeeService: AttendeeService, private confirmationService: ConfirmationService) {
-    this.attendeeTypes = [];
-    this.attendeeTypes.push({label: 'Adult', value: true});
-    this.attendeeTypes.push({label: 'Youth', value: false});
+    this.attendeeTypes = { multiselect: false, options: [] };
+    this.attendeeTypes.options.push({label: 'Adult', value: true});
+    this.attendeeTypes.options.push({label: 'Youth', value: false});
 
-    this.days = [];
-    this.days.push({label: 'Monday', value: 'monday'});
-    this.days.push({label: 'Tuesday', value: 'tuesday'});
-    this.days.push({label: 'Wednesday', value: 'wednesday'});
-    this.days.push({label: 'Thursday', value: 'thursday'});
-    this.days.push({label: 'Friday', value: 'friday'});
-    this.days.push({label: 'Saturday', value: 'saturday'});
+    this.days = { multiselect: true, options: [] };
+    this.days.options.push({label: 'Monday', value: 'monday'});
+    this.days.options.push({label: 'Tuesday', value: 'tuesday'});
+    this.days.options.push({label: 'Wednesday', value: 'wednesday'});
+    this.days.options.push({label: 'Thursday', value: 'thursday'});
+    this.days.options.push({label: 'Friday', value: 'friday'});
+    this.days.options.push({label: 'Saturday', value: 'saturday'});
     
-    this.triathlonChoices = [];
-    this.triathlonChoices.push({label: 'Yes', value: true});
-    this.triathlonChoices.push({label: 'No', value: false});
+    this.triathlonChoices = { multiselect: false, options: [] };
+    this.triathlonChoices.options.push({label: 'Yes', value: true});
+    this.triathlonChoices.options.push({label: 'No', value: false});
 
     this.model = new Attendee();
   }
@@ -213,6 +214,7 @@ export class AttendeeFormComponent implements OnInit {
     this.submitted = false;
     this.submitFailed = false;
     this.submiting = false;
+    this.selectedDays = [];
 
     this.model = Object.assign({}, this.attendee);
     if (this.model.dateOfBirth) {

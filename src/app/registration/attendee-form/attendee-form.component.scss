@@ -105,6 +105,41 @@ form {
   }
 }
 
+::ng-deep form {
+  .form-group {
+    &.form-error {
+      .btn-group {
+        button {
+          border-top: 1px solid #e92424;
+          border-bottom: 1px solid #e92424;
+
+          &:first-child {
+            border-left: 1px solid #e92424;
+          }
+      
+          &:last-child {
+            border-right: 1px solid #e92424;
+          }
+        }
+                
+      }
+    }
+    .btn-group {
+      button {
+        width: 100px;
+      }
+    }
+    &.attendance-grp {
+      .btn-group {
+        button {
+          width: 130px;
+          padding-left: 15px;
+        }
+      }
+    }
+  }  
+}
+
 ::ng-deep .ui-selectbutton.ui-buttonset {
 
   display: inline-block;

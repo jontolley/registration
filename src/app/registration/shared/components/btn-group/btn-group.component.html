@@ -1,0 +1,6 @@
+<div class="btn-group" role="group">
+  <button *ngFor="let option of options.options" type="button" class="btn btn-grp-blue" [class.active]="isActive(option)" (click)="valueChanged(option)">
+    <i class="fa fa-square-o unchecked-icon"></i>
+    <i class="fa fa-check-square-o checked-icon"></i> {{option.label}}
+  </button>
+</div>

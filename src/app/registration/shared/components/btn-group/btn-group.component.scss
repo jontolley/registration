@@ -1,0 +1,37 @@
+.btn-group {
+  display: inline-block;
+}
+button.btn-grp-blue {
+  border: 1px solid #d6d6d6;
+  background: #fff;
+  color: #555;
+  box-shadow: none !important;
+  &:hover {
+    border-color: silver;
+    background: #eee;
+    color: #212121;
+  }
+  i {
+    width: 15px;
+    margin-right: 3px;
+  }
+  &.active {
+    background-color: #007bff;
+    border-color: #0062cc;
+    color: #eee;
+    .checked-icon {
+      display: inline-block;
+    }
+    .unchecked-icon {
+      display: none;
+    }
+  }
+  &:not(.active) {
+    .checked-icon {
+      display: none;
+    }
+    .unchecked-icon {
+      display: inline-block;
+    }
+  }
+}
