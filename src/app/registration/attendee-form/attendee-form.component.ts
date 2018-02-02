@@ -90,6 +90,7 @@ export class AttendeeFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
     forkJoin([
       this.dataService.getShirtSizes(),
       this.dataService.getAccommodations(),
@@ -139,6 +140,7 @@ export class AttendeeFormComponent implements OnInit {
           console.log('Attendee updated');
           this.submitted = true;
           this.submiting = false;
+          this.showGrowl('success','Confirmed','Attendee Saved');
         }
       );
     } else {
@@ -159,6 +161,7 @@ export class AttendeeFormComponent implements OnInit {
           console.log('Attendee added');
           this.submitted = true;
           this.submiting = false;
+          this.showGrowl('success','Confirmed','Attendee Saved');
         }
       );
     }
@@ -284,7 +287,6 @@ export class AttendeeFormComponent implements OnInit {
             this.attendee = undefined;
             this.reset();
             console.log('Attendee deleted');
-            this.growlMessages = [{severity:'success', summary:'Confirmed', detail:'Record deleted'}];
             this.submitted = false;
             this.removing = false;
           }
@@ -345,6 +347,11 @@ export class AttendeeFormComponent implements OnInit {
 
   private capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+  
+  showGrowl(severity:string, summary:string, detail?:string) {
+    this.growlMessages = [];
+    this.growlMessages.push({severity:severity, summary:summary, detail:detail});
   }
 
 }

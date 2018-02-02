@@ -39,8 +39,7 @@ export class AssignComponent implements OnInit {
       this.assignments = new UserWithSubgroups();
     }
 
-  ngOnInit() {
-
+  ngOnInit() {    
     this.assign.getAssignments()
     .subscribe(
       data => {
@@ -123,7 +122,6 @@ export class AssignComponent implements OnInit {
       data => {
         this.assignments.subgroups.push(this.selectedSubgroup);
         this.showGrowl('success', 'Unit successfuly added', `${this.selectedSubgroup.name}`);
-        console.log('new assignment', data);
         this.selectedSubgroup = undefined;
       },
       error => {
@@ -131,7 +129,6 @@ export class AssignComponent implements OnInit {
         this.showGrowl('error', 'Invalid Pin', 'The pin was invalid.');
       }
     );
-    console.log('assign Subgroup', pin, subgroup);
   }
 
   removeSubgroup(subgroupId:number): void {

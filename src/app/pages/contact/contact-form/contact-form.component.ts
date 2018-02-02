@@ -48,7 +48,6 @@ export class ContactFormComponent implements OnInit {
         console.log(error);
       },
       () => {
-        console.log('Contact Message Sent');
         this.submitted = true;
         this.submiting = false;
       }

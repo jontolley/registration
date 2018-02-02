@@ -43,7 +43,6 @@ export class AuthService {
         this.users.GetUser()
         .subscribe(
           data => {
-            console.log('Got User Object', data);
           },
           error => {
             if (error.code === 404) {
@@ -73,9 +72,7 @@ export class AuthService {
         if (this.isAuthenticated()) {
           this.users.GetUser()
           .subscribe(
-            data => {
-              console.log('Got User Object', data);
-            },
+            data => { },
             error => {
               if (error.code === 404) {
                 // User not found to create and send to assignment page
@@ -96,7 +93,6 @@ export class AuthService {
           );
         } else {
           this.login();
-          console.log('Is NOT Authenticated');
         }
       }
     });
