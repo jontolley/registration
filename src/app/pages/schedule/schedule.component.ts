@@ -41,7 +41,7 @@ export class ScheduleComponent implements OnInit {
         { time:'5:00 pm',title:'CLOSE: Activities / Merit Badge Midway / Trading Post'},
         { time:'5:15 pm',title:'DINNER / Pick up Food'},
         { time:'7:15 pm',title:'Camp-Wide Flags'},
-        { time:'8:00 pm',title:'T, W, TH: Evening Program with Stake or Ward --/-- FRIDAY: Closing Ceremony'},
+        { time:'8:00 pm',title:'Tuesday, Thrusday: Program with Stake or Ward, Wednesday: Camp wide fireside, Friday: Closing Ceremony'},
         { time:'10:00 pm',title:'Prepare for sleep'},
         { time:'11:00 pm',title:'Quiet'}
       ]
