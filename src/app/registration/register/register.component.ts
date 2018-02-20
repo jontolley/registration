@@ -69,9 +69,6 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.attendees = data;
-          if (this.attendees && this.attendees.length > 0) {
-            this.attendeeSelected(this.attendees[0]);
-          }
           this.loadingAttendees = false;
         },
         error => {
