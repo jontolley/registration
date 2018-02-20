@@ -20,6 +20,7 @@ import { UsersService } from '../services/users.service';
 export class AssignComponent implements OnInit {
 
   errorMessage:string;
+  busy:boolean = true;
   loadingGroups:boolean = true;
   loadingSubgroups: boolean = true;
 
@@ -62,6 +63,7 @@ export class AssignComponent implements OnInit {
       data => {
         this.groups = data;
         this.loadingGroups = false;
+        this.busy = false;
       },
       error => {
         console.error(error);
