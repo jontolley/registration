@@ -13,7 +13,6 @@ export class ScheduleComponent implements OnInit {
       title: 'Monday',
       events: [
         { time:'7:00 am',title:'Camp Check-In Begins'},
-        { time:'12:00 pm',title:'LUNCH / Pick up Food'},
         { time:'1:00 pm',title:'Camp-Wide Flag Ceremony & Opening'},
         { time:'2:00 pm',title:'OPEN: Activities / Merit Badge Midway / Trading Post'},
         { time:'5:00 pm',title:'CLOSE: Activities / Merit Badge Midway / Trading Post'},
