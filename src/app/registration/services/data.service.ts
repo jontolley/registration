@@ -8,6 +8,7 @@ export class DataService {
 
   //public API_URL = 'http://localhost:19671/api';
   public API_URL = 'https://encampment-api.azurewebsites.net/api';
+  public API_ANALYTICS_URL = 'https://encampment-analytics-api.azurewebsites.net/api';
 
   constructor(private authHttp: AuthHttp, private errorsService: ErrorsService) { }  
 

@@ -30,6 +30,7 @@ import { MappingService } from './services/mapping.service';
 import { AttendeeFormComponent } from './attendee-form/attendee-form.component';
 import { AttendeeService } from './services/attendee.service';
 import { FormsModule } from '@angular/forms';
+import { AnalyticsService } from './services/analytics.service';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({
@@ -67,7 +68,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     ErrorsService,
     MappingService,
     DataService,
-    AuthService,    
+    AnalyticsService,
+    AuthService,
     UsersService,
     AuthGuardService,
     DeactivateDelayService,

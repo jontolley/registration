@@ -11,6 +11,7 @@ import { Group } from '../models/group';
 import { Attendee } from '../models/attendee';
 import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 import { Subgroup } from '../models/subgroup';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'camp-register',
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
   selectedAttendee:Attendee;
 
   constructor(private auth: AuthService, private router: Router,
-    private assign:AssignService, private register:RegisterService) { }
+    private assign:AssignService, private register:RegisterService, private analytics:AnalyticsService) { }
 
   ngOnInit() {
     this.assign.getAssignments()
@@ -116,6 +117,14 @@ export class RegisterComponent implements OnInit {
     setTimeout(()=>{
       this.loadingAttendee = false;
     },50);
+  }
+
+  downloadList(id:number) {
+    this.analytics.getSubgroupList(id);
+  }
+
+  downloadStakeList(id:number) {
+    this.analytics.getGroupList(id);
   }
 
   selectedAttendeeInListOfAttendees(): boolean {

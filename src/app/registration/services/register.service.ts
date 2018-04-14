@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { AuthHttp } from 'angular2-jwt';
 
 import { DataService } from './data.service';
 import { Group } from '../models/group';
 import { Subgroup } from '../models/subgroup';
 import { Attendee } from '../models/attendee';
-import { AuthHttp } from 'angular2-jwt';
 import { ErrorsService } from './errors.service';
 
 @Injectable()
