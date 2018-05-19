@@ -13,8 +13,8 @@ export class MapsComponent implements OnInit {
 
   markers = [
     {
-      lat: 48.119742,
-      lng: -117.234771,
+      lat: 48.120542,
+      lng: -117.236771,
       label: 'A',
       description: 'Parking'
     },

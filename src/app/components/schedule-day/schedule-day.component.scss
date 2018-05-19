@@ -1,5 +1,17 @@
 .schedule-day {
+    .table {
+        margin-bottom: 0;
+    }
+
     th {
         width: 100px;
+    }
+
+    .sub-tables {
+        margin-top: 0.5rem;
+
+        .table th, .table td {
+            padding: 0.2rem;
+        }
     }
 }

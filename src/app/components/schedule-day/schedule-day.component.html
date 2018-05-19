@@ -2,7 +2,26 @@
   <table class="table">
     <tr *ngFor="let event of schedule.events">
       <th>{{event.time}}</th>
-      <td>{{event.title}}</td>
+      <td>{{event.title}}
+        <div class="row sub-tables" *ngIf="event.subevents1">
+          <div class="col-md-6">
+            <table class="table" *ngIf="event.subevents1">
+              <tr *ngFor="let subevent of event.subevents1">
+                <th>{{subevent.time}}</th>
+                <td>{{subevent.title}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <table class="table" *ngIf="event.subevents2">
+              <tr *ngFor="let subevent of event.subevents2">
+                <th>{{subevent.time}}</th>
+                <td>{{subevent.title}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
     </tr>
   </table>
 </div>
