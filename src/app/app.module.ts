@@ -30,6 +30,7 @@ import { CloseMenuDirective } from './directives/close-menu.directive';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
 import { SharedModule } from './registration/shared/shared.module';
+import { InformationComponent } from './pages/information/information.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SharedModule } from './registration/shared/shared.module';
     Error404Component,
     RegistrationComponent,
     CloseMenuDirective,
-    ErrorUnexpectedComponent
+    ErrorUnexpectedComponent,
+    InformationComponent
   ],
   imports: [
     BrowserAnimationsModule,

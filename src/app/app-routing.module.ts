@@ -9,6 +9,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 import { RegistrationComponent } from './pages/registration/registration.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
+import { InformationComponent } from './pages/information/information.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'maps',
     component: MapsComponent
+  },
+  {
+    path: 'information',
+    component: InformationComponent
   },
   {
     path: 'faq',
