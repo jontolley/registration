@@ -49,8 +49,10 @@
 
         table {
             display: block;
-            overflow-x: auto;
             white-space: nowrap;
+
+            overflow-x: scroll; /* has to be scroll, not auto */
+            -webkit-overflow-scrolling: touch;
         }
     }
 
@@ -89,3 +91,13 @@
         }
     }
 }
+
+@media (min-width: 768px) {
+    .outertabs {
+        .tab-content {
+            table {
+                overflow-x: auto;
+            }
+        }
+    }
+  }
