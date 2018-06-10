@@ -1,18 +1,80 @@
-<camp-page-header title="Schedule" subTitle="Times are subject to change"></camp-page-header>
+<camp-page-header title="Schedule"></camp-page-header>
 <div class="container">
   <div class="mt-3 schedule col-lg-10 mx-auto">
   <div class="row">
-    <h2 class="header mx-auto">August 6 - 11, 2018</h2>
+    <h2 class="header mx-auto my-3">August 6 - 11, 2018</h2>
   </div>
-  <ul class="nav my-3 justify-content-center" role="tablist">
-    <li class="nav-item m-lg-3 m-1 col-xs-12 col-md-auto" *ngFor="let day of encampmentDays; let isFirst = first">
-      <a class="nav-link" [class.active]="isFirst" id="{{day.id}}-tab" data-toggle="tab" href="#{{day.id}}" role="tab">{{day.title}}</a>
-    </li>
-  </ul>
-  <div class="tab-content">
-    <div *ngFor="let day of encampmentDays; let isFirst = first" class="tab-pane fade" [class.active]="isFirst" [class.show]="isFirst" id="{{day.id}}" role="tabpanel">
-      <camp-schedule-day [schedule]="day"></camp-schedule-day>
+
+  <div class="outertabs">
+    <ul class="nav nav-tabs mt-3 justify-content-left" role="tablist">
+      <li class="nav-item mx-lg-3 col-xs-12 col-md-auto">
+        <a class="nav-link active" id="dailyschedule-tab" data-toggle="tab" href="#dailyschedule" role="tab">Daily Schedule</a>
+      </li>
+      <li class="nav-item mx-lg-3 col-xs-12 col-md-auto">
+        <a class="nav-link" id="mountaintop-tab" data-toggle="tab" href="#mountaintop" role="tab">Mountaintop Experience</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="mountaintop" class="tab-pane fade" role="tabpanel">
+        <div class="table">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Mount Zion</th>
+                <th>Cumorah's Hill</th>
+                <th>Mount Horeb</th>
+                <th>Mont Shelem</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <th>Tuesday</th>
+                  <td>Helena</td>
+                  <td>Spokane East</td>
+                  <td>Kalispell</td>
+                  <td>Mt Spokane</td>
+                </tr>
+                <tr>
+                  <th>Wednesday</th>
+                  <td>Frenchtown</td>
+                  <td>Moscow</td>
+                  <td>Lewiston</td>
+                  <td>Colville</td>
+                </tr>
+                <tr>
+                  <th>Thursday</th>
+                  <td>Spokane West</td>
+                  <td>Spokane Valley</td>
+                  <td>Hayden</td>
+                  <td>Spokane</td>
+                </tr>
+                <tr>
+                  <th>Friday</th>
+                  <td>Sandpoint</td>
+                  <td>Spokane North</td>
+                  <td>Coeur d'Alene</td>
+                  <td>Great Falls</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="dailyschedule" class="innertabs tab-pane fade active show" role="tabpanel">
+        <ul class="nav justify-content-center" role="tablist">
+          <li class="nav-item m-lg-3 m-1 col-xs-12 col-md-auto" *ngFor="let day of encampmentDays; let isFirst = first">
+            <a class="nav-link" [class.active]="isFirst" id="{{day.id}}-tab" data-toggle="tab" href="#{{day.id}}" role="tab">{{day.title}}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div *ngFor="let day of encampmentDays; let isFirst = first" class="tab-pane fade" [class.active]="isFirst" [class.show]="isFirst" id="{{day.id}}" role="tabpanel">
+            <camp-schedule-day [schedule]="day"></camp-schedule-day>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+
 </div>
 </div>
