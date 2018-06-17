@@ -78,11 +78,11 @@ export class ScheduleComponent implements OnInit {
           {time:'8:00 am', title:'Frenchtown'},
           {time:'8:00 am', title:'Kalispell'},
           {time:'8:00 am', title:'Great Falls'},
-          {time:'8:30 am', title:'Helena'},
-          {time:'8:30 am', title:'Stevensville'},
-          {time:'7:30 am', title:'Lewiston'},
           {time:'8:00 am', title:'Moscow'},
           {time:'8:00 am', title:'Hayden'},
+          {time:'8:30 am', title:'Helena'},
+          {time:'8:30 am', title:'Stevensville'},
+          {time:'8:30 am', title:'Lewiston'},
           {time:'8:30 am', title:"Coeur d'Alene"}
         ],subevents2:[
           {time:'8:30 am', title:'Spokane Valley'},
