@@ -22,9 +22,18 @@ export class AnalyticsService {
     });
   }
 
-  public getGroupList(id:number): void {
+  public getGroupListByAge(id:number): void {
     const options = new RequestOptions({responseType: ResponseContentType.Blob });
     this.authHttp.get(`${this.dataService.API_ANALYTICS_URL}/encampment/stake/${id}`, options)
+    .subscribe(res => {
+      const fileName = this.getFileNameFromResponseContentDisposition(res);
+      this.saveFile(res.blob(), fileName);
+    });
+  }
+
+  public getGroupListByDay(id:number): void {
+    const options = new RequestOptions({responseType: ResponseContentType.Blob });
+    this.authHttp.get(`${this.dataService.API_ANALYTICS_URL}/encampment/stake/${id}/day`, options)
     .subscribe(res => {
       const fileName = this.getFileNameFromResponseContentDisposition(res);
       this.saveFile(res.blob(), fileName);

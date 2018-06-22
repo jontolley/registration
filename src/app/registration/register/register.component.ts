@@ -123,8 +123,12 @@ export class RegisterComponent implements OnInit {
     this.analytics.getSubgroupList(id);
   }
 
-  downloadStakeList(id:number) {
-    this.analytics.getGroupList(id);
+  downloadStakeListByAge(id:number) {
+    this.analytics.getGroupListByAge(id);
+  }
+
+  downloadStakeListByDay(id:number) {
+    this.analytics.getGroupListByDay(id);
   }
 
   selectedAttendeeInListOfAttendees(): boolean {
