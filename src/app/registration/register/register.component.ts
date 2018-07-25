@@ -131,6 +131,10 @@ export class RegisterComponent implements OnInit {
     this.analytics.getGroupListByDay(id);
   }
 
+  downloadWardCostsByStake(id:number) {
+    this.analytics.getGroupCostsByWard(id);
+  }
+
   selectedAttendeeInListOfAttendees(): boolean {
     if (this.selectedAttendee && !this.selectedAttendee.id) return true;
 

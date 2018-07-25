@@ -40,6 +40,15 @@ export class AnalyticsService {
     });
   }
 
+  public getGroupCostsByWard(id:number): void {
+    const options = new RequestOptions({responseType: ResponseContentType.Blob });
+    this.authHttp.get(`${this.dataService.API_ANALYTICS_URL}/encampment/stake/${id}/cost`, options)
+    .subscribe(res => {
+      const fileName = this.getFileNameFromResponseContentDisposition(res);
+      this.saveFile(res.blob(), fileName);
+    });
+  }
+
   /**
    * Saves a file by opening file-save-as dialog in the browser
    * using file-save library.
