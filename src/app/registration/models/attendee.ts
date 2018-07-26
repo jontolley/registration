@@ -11,6 +11,7 @@ export class Attendee {
 
     public dateOfBirth:Date;
     public triathlon:boolean;
+    public isWithMinor:boolean;
     public shirtSize:string;
 
     public insertedBy:string;

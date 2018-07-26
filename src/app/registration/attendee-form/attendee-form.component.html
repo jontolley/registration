@@ -27,7 +27,6 @@
             <label for="isAdult">Attendee Type</label>
             <label [class.error-message]="isAdult.hasError('required')" class="required">required</label>
           </div>
-          <!-- <p-selectButton id="isAdult" name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult" #isAdult="ngModel" required></p-selectButton> -->
           <app-btn-group  id="isAdult" name="isAdult" [options]="attendeeTypes" [(ngModel)]="model.isAdult" #isAdult="ngModel" required></app-btn-group>
         </div>
 
@@ -63,8 +62,17 @@
             <label for="triathlon">Triathlon</label>
             <label [class.error-message]="triathlon.hasError('required')" class="required">required</label>
           </div>
-          <!-- <p-selectButton id="triathlon" name="triathlon" [options]="triathlonChoices" [(ngModel)]="model.triathlon" #triathlon="ngModel" required></p-selectButton> -->
-          <app-btn-group  id="triathlon" name="triathlon" [options]="triathlonChoices" [(ngModel)]="model.triathlon" #triathlon="ngModel" required></app-btn-group>
+          <app-btn-group  id="triathlon" name="triathlon" [options]="yesOrNoChoice" [(ngModel)]="model.triathlon" #triathlon="ngModel" required></app-btn-group>
+        </div>
+      </div>
+      
+      <div class="form-row" *ngIf="with11YrOldEligible()">
+        <div class="form-group col-md-auto" [class.form-error]="isWithMinor.invalid && (isWithMinor.dirty || submitFailed)">
+          <div class="form-solo-label">
+            <label for="isWithMinor">With 11 Yr Old</label>
+            <label [class.error-message]="isWithMinor.hasError('required')" class="required">required</label>
+          </div>
+          <app-btn-group  id="isWithMinor" name="isWithMinor" [options]="yesOrNoChoice" [(ngModel)]="model.isWithMinor" #isWithMinor="ngModel" required></app-btn-group>
         </div>
       </div>
       
@@ -74,7 +82,6 @@
             <label for="attendance">Attendance</label>
             <label [class.error-message]="attendance.hasError('required')" class="required">required</label>
           </div>
-          <!-- <p-selectButton name="attendance"                 [options]="days" [(ngModel)]="selectedDays" #attendance="ngModel" multiple="multiple" required></p-selectButton> -->
           <app-btn-group id="attendance" name="attendance" [options]="days" [(ngModel)]="selectedDays" #attendance="ngModel" required></app-btn-group>
         </div>
       </div>

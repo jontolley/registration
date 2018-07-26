@@ -50,7 +50,7 @@ export class AttendeeFormComponent implements OnInit {
   attendeeTypes: BtnGroupOptions;
   days: BtnGroupOptions;
   selectedDays: string[] = [];
-  triathlonChoices: BtnGroupOptions;
+  yesOrNoChoice: BtnGroupOptions;
   shirtSizeChoices: SelectItem[] = [];
   accommodationChoices: any[] = [];
   meritBadgeChoices: any[] = [];
@@ -82,9 +82,9 @@ export class AttendeeFormComponent implements OnInit {
     this.days.options.push({label: 'Friday', value: 'friday'});
     this.days.options.push({label: 'Saturday', value: 'saturday'});
     
-    this.triathlonChoices = { multiselect: false, options: [] };
-    this.triathlonChoices.options.push({label: 'Yes', value: true});
-    this.triathlonChoices.options.push({label: 'No', value: false});
+    this.yesOrNoChoice = { multiselect: false, options: [] };
+    this.yesOrNoChoice.options.push({label: 'Yes', value: true});
+    this.yesOrNoChoice.options.push({label: 'No', value: false});
 
     this.model = new Attendee();
   }
@@ -123,6 +123,13 @@ export class AttendeeFormComponent implements OnInit {
     }
 
     this.submiting = true;
+
+    if (this.model.isAdult) {
+      this.dob.month = undefined;
+      this.dob.day = undefined;
+      this.dob.year = undefined;
+      this.model.dateOfBirth = undefined;
+    }
 
     if (this.model.id) {
       // Current Attendee so update
@@ -311,6 +318,18 @@ export class AttendeeFormComponent implements OnInit {
     return isEligible;
   }
 
+  with11YrOldEligible(): boolean {
+    let isEligible:boolean;
+
+    if (this.model.isAdult && this.onlyAttendingFridayAndOrSaturday(this.selectedDays)) {
+      isEligible = true;
+    } else {
+      isEligible = false;
+      this.model.isWithMinor = false;
+    }
+    return isEligible;
+  }
+
   confirmDelete(): Observable<boolean> {
     return new Observable(observer => {
       this.confirmationService.confirm({
@@ -347,6 +366,18 @@ export class AttendeeFormComponent implements OnInit {
 
   private capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }
+
+  private onlyAttendingFridayAndOrSaturday(daysAttending) {
+    if (daysAttending.length === 2 && daysAttending.indexOf('friday') > -1 && daysAttending.indexOf('saturday') > -1) {
+      return true;
+    }
+
+    if (daysAttending.length === 1 && (daysAttending.indexOf('friday') > -1 || daysAttending.indexOf('saturday') > -1)) {
+      return true;
+    }
+
+    return false;
   }
   
   showGrowl(severity:string, summary:string, detail?:string) {
