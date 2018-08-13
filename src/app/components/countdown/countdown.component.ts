@@ -27,7 +27,18 @@ export class CountdownComponent implements OnInit, OnDestroy  {
       let now = new Date();
       let ticks = this.CountdownTo.valueOf() - now.valueOf();
 
-      if (ticks < 0) {
+      if (ticks >= 0) {
+        this.days = Math.trunc(ticks / (1000*60*60*24));
+        ticks = ticks - (this.days * (1000*60*60*24));
+
+        this.hours = Math.trunc(ticks / (1000*60*60));
+        ticks = ticks - (this.hours * (1000*60*60));
+
+        this.minutes = Math.trunc(ticks / (1000*60));
+        ticks = ticks - (this.minutes * (1000*60));
+
+        this.seconds = Math.trunc(ticks / (1000));
+      } else {
         this.days = 0;
         this.hours = 0;
         this.minutes = 0;
@@ -36,17 +47,7 @@ export class CountdownComponent implements OnInit, OnDestroy  {
         this.hideComponent = 'boom';
         this.subscription.unsubscribe();
       }
-
-      this.days = Math.trunc(ticks / (1000*60*60*24));
-      ticks = ticks - (this.days * (1000*60*60*24));
-
-      this.hours = Math.trunc(ticks / (1000*60*60));
-      ticks = ticks - (this.hours * (1000*60*60));
-
-      this.minutes = Math.trunc(ticks / (1000*60));
-      ticks = ticks - (this.minutes * (1000*60));
-
-      this.seconds = Math.trunc(ticks / (1000));
+            
     });
   }
 
