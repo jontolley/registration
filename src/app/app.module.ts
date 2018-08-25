@@ -6,6 +6,7 @@ import { FormsModule }   from '@angular/forms';
 import { HttpModule, Http, RequestOptions } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './shared/shared.module'
 import { AppComponent } from './app.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
@@ -15,7 +16,6 @@ import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
-import { RegistrationComponent } from './pages/registration/registration.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 
@@ -29,7 +29,6 @@ import { ContactService } from './services/contact.service';
 import { CloseMenuDirective } from './directives/close-menu.directive';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
-import { SharedModule } from './registration/shared/shared.module';
 import { InformationComponent } from './pages/information/information.component';
 
 @NgModule({
@@ -49,7 +48,6 @@ import { InformationComponent } from './pages/information/information.component'
     ContactFormComponent,
     JtPhonePipe,
     Error404Component,
-    RegistrationComponent,
     CloseMenuDirective,
     ErrorUnexpectedComponent,
     InformationComponent
@@ -60,10 +58,10 @@ import { InformationComponent } from './pages/information/information.component'
     HttpModule,
     AppRoutingModule,
     TextMaskModule,
-    SharedModule,
     AgmCoreModule.forRoot({
       apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
-    })
+    }),
+    SharedModule
   ],
   providers: [
     ContactService
