@@ -16,16 +16,13 @@ import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 
 import { AgmCoreModule } from '@agm/core';
 import { APP_CONFIG } from './app.config';
 import { ScheduleDayComponent } from './components/schedule-day/schedule-day.component';
 import { ShrinkOnScrollDirective } from './directives/shrink-on-scroll.directive';
-import { ContactFormComponent } from './pages/contact/contact-form/contact-form.component';
 import { JtPhonePipe } from './pipes/jt-phone.pipe';
-import { ContactService } from './services/contact.service';
 import { CloseMenuDirective } from './directives/close-menu.directive';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
@@ -42,10 +39,8 @@ import { InformationComponent } from './pages/information/information.component'
     ScheduleComponent,
     MapsComponent,
     FaqComponent,
-    ContactComponent,
     ScheduleDayComponent,
     ShrinkOnScrollDirective,
-    ContactFormComponent,
     JtPhonePipe,
     Error404Component,
     CloseMenuDirective,
@@ -62,9 +57,6 @@ import { InformationComponent } from './pages/information/information.component'
       apiKey: APP_CONFIG.GOOGLE_MAPS_API_KEY
     }),
     SharedModule
-  ],
-  providers: [
-    ContactService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,7 +5,6 @@ import { ActivitiesComponent } from './pages/activities/activities.component';
 import { ScheduleComponent } from './pages/schedule/schedule.component';
 import { MapsComponent } from './pages/maps/maps.component';
 import { FaqComponent } from './pages/faq/faq.component';
-import { ContactComponent } from './pages/contact/contact.component';
 import { Error404Component } from './errors/error-404/error-404.component';
 import { ErrorUnexpectedComponent } from './errors/error-unexpected/error-unexpected.component';
 import { InformationComponent } from './pages/information/information.component';
@@ -38,10 +37,6 @@ const routes: Routes = [
   {
     path: 'faq',
     component: FaqComponent
-  },
-  {
-    path: 'contact',
-    component: ContactComponent
   },
   {
     path: '404',
